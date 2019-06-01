@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Чудновец](https://up.htmlacademy.ru/javascript/17/user/585147).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Выхрыстюк](denv928@gmail.com).
 
 ---
 
