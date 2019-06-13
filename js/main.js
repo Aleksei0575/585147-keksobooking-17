@@ -9,7 +9,7 @@ var generateNum = function (min, max) {
 };
 
 // Функция создания одного пользователя
-var createUser = function (author, offer, location) {
+var createUser = function (author, offer) {
   return {
     'author': {
       'avatar': 'img/avatars/user' + author + '.png'
@@ -31,7 +31,7 @@ var createUsers = function () {
   var arrayUsers = [];
   var offer = ['plase', 'flat', 'house', 'bungalo'];
   for (var i = 0; i < 8; i++) {
-    arrayUsers.push(createUser('0' + (i + 1), offer[i], generateNum()));
+    arrayUsers.push(createUser('0' + (i + 1), offer[i]));
   }
   return arrayUsers;
 };
