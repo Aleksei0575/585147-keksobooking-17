@@ -45,8 +45,8 @@ var pinMarker = document.querySelector('#pin').content.querySelector('.map__pin'
 var renderPin = function (user) {
   var pinElement = pinMarker.cloneNode(true);
   pinElement.style = 'left:' + user.location.x + 'px;top:' + user.location.y + 'px;';
-  pinElement.querySelector('img').src = user.author.avatar;
-  pinElement.querySelector('img').alt = 'Здесь будет объявление';
+  pinElement.querySelector('img').setAttribute('src', user.author.avatar);
+  pinElement.querySelector('img').setAttribute('alt', 'Здесь будет объявление');
   return pinElement;
 };
 
