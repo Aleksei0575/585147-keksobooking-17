@@ -38,7 +38,7 @@ var createUsers = function () {
 
 // Открытие карты
 var mapBlock = document.querySelector('.map');
-mapBlock.classList.remove('map--faded');
+// mapBlock.classList.remove('map--faded');
 
 // Создание маркера
 var pinMarker = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -59,3 +59,63 @@ for (var i = 0; i < 8; i++) {
 }
 var pinUsers = document.querySelector('.map__pins');
 pinUsers.appendChild(fragment);
+
+// ДЗ Личный проект: подробности
+// Здесь поиск формы на странице и элемента в форме
+var formFillingInfo = document.querySelector('.ad-form--disabled');
+var searchForm = document.querySelector('.ad-form');
+var fieldsets = searchForm.getElementsByTagName('fieldset');
+
+// Функция добавляет атрибут disabled полям формы и прячет маркеры пользователей
+var blockElemet = function (element) {
+  for (var j = 0; j < element.length; j++) {
+    element[j].setAttribute('disabled', 'disabled');
+  }
+  // pinUsers = document.querySelectorAll('.map__pin').style = 'display: none;';
+  pinUsers = document.querySelectorAll('.map__pin');
+  for (var k = 1; k < pinUsers.length; k++) {
+    var allMarker = pinUsers[k];
+    allMarker.classList.add('visually-hidden');
+  }
+  return element;
+};
+blockElemet(fieldsets);
+
+// Перевод страницы в активный режим
+// Функция убирает атрибут disabled у полей формы и добавляет маркеры пользователей
+var pinPageActivate = document.querySelector('.map__pin--main');
+pinPageActivate.addEventListener('click', function () {
+  mapBlock.classList.remove('map--faded');
+  formFillingInfo.classList.remove('ad-form--disabled');
+  var blockActivate = function (element) {
+    for (var j = 0; j < element.length; j++) {
+      element[j].removeAttribute('disabled', 'disabled');
+    }
+    pinUsers = document.querySelectorAll('.map__pin');
+    for (var k = 1; k < pinUsers.length; k++) {
+      var allMarker = pinUsers[k];
+      allMarker.classList.remove('visually-hidden');
+    }
+    return element;
+  };
+  blockActivate(fieldsets);
+});
+
+// Функция получения координат
+function getСoordinates(elem) {
+  var boxObject = document.querySelector(elem).getBoundingClientRect();
+  return {
+    top: boxObject.top + pageYOffset,
+    left: boxObject.left - 111.5 + pageXOffset
+  };
+}
+
+var mapPinCoordinates = getСoordinates('.map__pin');
+
+// Функция получения меткой координаты и ее передача input в форме
+var setСoordinates = function () {
+  var coordX = mapPinCoordinates.left;
+  var coordY = mapPinCoordinates.top;
+  document.querySelector('#address').value = coordX + ',' + coordY;
+};
+setСoordinates('#address');
