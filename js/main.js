@@ -1,7 +1,5 @@
 'use strict';
 var BLOCK_WIDTH = document.querySelector('.map__pins').offsetWidth;
-// var PIN_MARKERS = document.querySelectorAll('.map__pin');
-
 
 // Генерация рандомного числа
 var generateNum = function (min, max) {
@@ -75,7 +73,6 @@ var blockElement = function (element) {
   for (var j = 0; j < element.length; j++) {
     element[j].setAttribute('disabled', 'disabled');
   }
-  // pinUsers = document.querySelectorAll('.map__pin');
   for (var k = 1; k < PIN_MARKERS.length; k++) {
     var allMarker = PIN_MARKERS[k];
     allMarker.classList.add('visually-hidden');
@@ -85,25 +82,8 @@ var blockElement = function (element) {
 blockElement(fieldsets);
 
 // Перевод страницы в активный режим
-// Функция убирает атрибут disabled у полей формы и добавляет маркеры пользователей
+
 var onPinPageActivateClick = document.querySelector('.map__pin--main');
-onPinPageActivateClick.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  mapBlock.classList.remove('map--faded');
-  formFillingInfo.classList.remove('ad-form--disabled');
-  var blockActivate = function (element) {
-    for (var j = 0; j < element.length; j++) {
-      element[j].removeAttribute('disabled');
-    }
-    // pinUsers = document.querySelectorAll('.map__pin');
-    for (var k = 1; k < PIN_MARKERS.length; k++) {
-      var allMarker = PIN_MARKERS[k];
-      allMarker.classList.remove('visually-hidden');
-    }
-    return element;
-  };
-  blockActivate(fieldsets);
-});
 
 // Функция получения координат
 function getCoordinates(elem) {
@@ -123,3 +103,107 @@ var setCoordinates = function () {
   document.querySelector('#address').value = coordX + ',' + coordY;
 };
 setCoordinates('#address');
+
+// ДЗ Личный проект: доверяй, но проверяй (Валидация формы)
+// Функция валидации поля заголовка объявления
+function validTitle() {
+  var input = searchForm.querySelector('#title');
+  var length = input.value.length;
+  return length >= 30 && length < 100;
+}
+validTitle();
+// Если поле валидно, функция возвращает true иначе false
+// function formValid() {
+//   return validTitle() && true;
+// }
+
+// Функция валидации полей типа жилья и цены за ночь
+var listHousing = searchForm.querySelector('#type');
+var inputPrice = searchForm.querySelector('#price');
+var minPrice = {
+  BUNGALO: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000,
+};
+
+listHousing.addEventListener('change', function () {
+  // inputPrice.min = minPrice[listHousing.value.toUpperCase()];
+  inputPrice.placeholder = minPrice[listHousing.value.toUpperCase()];
+});
+
+// Функция синхронизации полей времени заезда и выезда
+(function () {
+  var listTimeIn = searchForm.querySelector('#timein');
+  var listTimeOut = searchForm.querySelector('#timeout');
+
+  listTimeIn.addEventListener('change', function () {
+    listTimeOut.selectedIndex = listTimeIn.selectedIndex;
+  });
+  listTimeOut.addEventListener('change', function () {
+    listTimeIn.selectedIndex = listTimeOut.selectedIndex;
+  });
+})();
+
+// Функция перемещения маркера, и активация страницы
+onPinPageActivateClick.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  // Активация карты
+  mapBlock.classList.remove('map--faded');
+  // Поучение начальных координат метки
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+  // Перемещение метки
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+    onPinPageActivateClick.style.top = (onPinPageActivateClick.offsetTop - shift.y) + 'px';
+    onPinPageActivateClick.style.left = (onPinPageActivateClick.offsetLeft - shift.x) + 'px';
+    // Здесь функция передает живые координаты input в форме
+    var setCoordinatesMove = function () {
+      var coordX = onPinPageActivateClick.offsetLeft - shift.x;
+      var coordY = onPinPageActivateClick.offsetTop - shift.y;
+      document.querySelector('#address').value = coordX + '' + ',' + coordY;
+    };
+    setCoordinatesMove('#address');
+  };
+  // Функция отпускает метку и активирует других пользователей, убирая атрибут disabled
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    // Активация маркеров пользователей
+    formFillingInfo.classList.remove('ad-form--disabled');
+    var blockActivate = function (element) {
+      for (var j = 0; j < element.length; j++) {
+        element[j].removeAttribute('disabled');
+      }
+      for (var k = 1; k < PIN_MARKERS.length; k++) {
+        var allMarker = PIN_MARKERS[k];
+        allMarker.classList.remove('visually-hidden');
+      }
+      return element;
+    };
+    blockActivate(fieldsets);
+    // Отпускание блока
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+// Пока оставил закомментированным, не знаю как реализовать
+// searchForm.addEventListener('submit', function (evt) {
+//   evt.preventDefault();
+//
+//   if (formValid()) {
+//     // sendServer()
+//   }
+// });
