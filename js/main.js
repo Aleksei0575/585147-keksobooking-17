@@ -1,5 +1,8 @@
 'use strict';
 var BLOCK_WIDTH = document.querySelector('.map__pins').offsetWidth;
+// размеры пина для объявления из CSS
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
 
 // Генерация рандомного числа
 var generateNum = function (min, max) {
@@ -44,8 +47,7 @@ var mapBlock = document.querySelector('.map');
 var pinMarker = document.querySelector('#pin').content.querySelector('.map__pin');
 var renderPin = function (user) {
   var pinElement = pinMarker.cloneNode(true);
-  // pinElement.style = 'left:' + (32.5 + user.location.x) + 'px;top:' + (81 + user.location.y) + 'px;';
-  pinElement.style = 'left:' + user.location.x + 'px;top:' + user.location.y + 'px;';
+  pinElement.style = 'left:' + (user.location.x - PIN_WIDTH / 2) + 'px;top:' + (user.location.y - PIN_HEIGHT + 60) + 'px;';
   pinElement.querySelector('img').setAttribute('src', user.author.avatar);
   pinElement.querySelector('img').setAttribute('alt', 'Здесь будет объявление');
   return pinElement;
@@ -155,6 +157,25 @@ onPinPageActivateClick.addEventListener('mousedown', function (evt) {
     x: evt.clientX,
     y: evt.clientY
   };
+
+  // Функция задает параметры контейнера, в котором будет перемещаться метка
+  /*
+    *param validCoord {number} - координата получаемвя при перемещении метки
+    *param minValue (number) - минимальное занчение диапазона
+    *param maxValue {number} - максимальное значение диапазона
+  */
+  var checksRangeCoords = function (validCoord, minValue, maxValue) {
+    var testCoord = validCoord;
+    if (testCoord < minValue) {
+      testCoord = minValue;
+      return testCoord;
+    }
+    if (testCoord > maxValue) {
+      testCoord = maxValue;
+    }
+    return testCoord;
+  };
+
   // Перемещение метки
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
@@ -166,8 +187,8 @@ onPinPageActivateClick.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    onPinPageActivateClick.style.top = (onPinPageActivateClick.offsetTop - shift.y) + 'px';
-    onPinPageActivateClick.style.left = (onPinPageActivateClick.offsetLeft - shift.x) + 'px';
+    onPinPageActivateClick.style.top = checksRangeCoords((onPinPageActivateClick.offsetTop - shift.y), 130, 630) + 'px';
+    onPinPageActivateClick.style.left = checksRangeCoords((onPinPageActivateClick.offsetLeft - shift.x), 0, 1140) + 'px';
     // Здесь функция передает живые координаты input в форме
     var setCoordinatesMove = function () {
       var coordX = onPinPageActivateClick.offsetLeft - shift.x;
