@@ -71,6 +71,11 @@ var fieldsets = searchForm.getElementsByTagName('fieldset');
 var PIN_MARKERS = document.querySelectorAll('.map__pin');
 
 // Функция добавляет атрибут disabled полям формы и прячет маркеры пользователей
+/**
+ * Функция добавляет атрибут disabled полям формы и прячет маркеры пользователей
+ * @param {element} element - всем html элементам fieldset
+ * @return {*}
+ */
 var blockElement = function (element) {
   for (var j = 0; j < element.length; j++) {
     element[j].setAttribute('disabled', 'disabled');
@@ -85,9 +90,14 @@ blockElement(fieldsets);
 
 // Перевод страницы в активный режим
 
-var onPinPageActivateClick = document.querySelector('.map__pin--main');
+var mapPinMain = document.querySelector('.map__pin--main');
 
 // Функция получения координат
+/**
+ * Функция получения координат
+ * @param {number} elem
+ * @return {{top: number, left: number}}
+ */
 function getCoordinates(elem) {
   var boxObject = document.querySelector(elem).getBoundingClientRect();
   return {
@@ -130,8 +140,11 @@ var minPrice = {
 };
 
 listHousing.addEventListener('change', function () {
-  // inputPrice.min = minPrice[listHousing.value.toUpperCase()];
   inputPrice.placeholder = minPrice[listHousing.value.toUpperCase()];
+});
+
+inputPrice.addEventListener('change', function () {
+  inputPrice.disabled = true;
 });
 
 // Функция синхронизации полей времени заезда и выезда
@@ -148,10 +161,11 @@ listHousing.addEventListener('change', function () {
 })();
 
 // Функция перемещения маркера, и активация страницы
-onPinPageActivateClick.addEventListener('mousedown', function (evt) {
+mapPinMain.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   // Активация карты
   mapBlock.classList.remove('map--faded');
+  searchForm.querySelector('#address').setAttribute('disabled', 'disabled');
   // Поучение начальных координат метки
   var startCoords = {
     x: evt.clientX,
@@ -159,10 +173,12 @@ onPinPageActivateClick.addEventListener('mousedown', function (evt) {
   };
 
   // Функция задает параметры контейнера, в котором будет перемещаться метка
-  /*
-    *param validCoord {number} - координата получаемвя при перемещении метки
-    *param minValue (number) - минимальное занчение диапазона
-    *param maxValue {number} - максимальное значение диапазона
+  /**
+   * Параметры функции
+   * @param{number} validCoord координата получаемвя при перемещении метки
+   * @param{number} minValue минимальное значение диапазона
+   * @param{number} maxValue максимальное значение диапазона
+   * @return{number}
   */
   var checksRangeCoords = function (validCoord, minValue, maxValue) {
     var testCoord = validCoord;
@@ -187,12 +203,12 @@ onPinPageActivateClick.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    onPinPageActivateClick.style.top = checksRangeCoords((onPinPageActivateClick.offsetTop - shift.y), 130, 630) + 'px';
-    onPinPageActivateClick.style.left = checksRangeCoords((onPinPageActivateClick.offsetLeft - shift.x), 0, 1140) + 'px';
+    mapPinMain.style.top = checksRangeCoords((mapPinMain.offsetTop - shift.y), 130, 630) + 'px';
+    mapPinMain.style.left = checksRangeCoords((mapPinMain.offsetLeft - shift.x), 0, 1140) + 'px';
     // Здесь функция передает живые координаты input в форме
     var setCoordinatesMove = function () {
-      var coordX = onPinPageActivateClick.offsetLeft - shift.x;
-      var coordY = onPinPageActivateClick.offsetTop - shift.y;
+      var coordX = mapPinMain.offsetLeft - shift.x;
+      var coordY = mapPinMain.offsetTop - shift.y;
       document.querySelector('#address').value = coordX + '' + ',' + coordY;
     };
     setCoordinatesMove('#address');
