@@ -3,6 +3,7 @@ var BLOCK_WIDTH = document.querySelector('.map__pins').offsetWidth;
 // размеры пина для объявления из CSS
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var MAIN_PIN_SIZE = 65;
 
 // Генерация рандомного числа
 var generateNum = function (min, max) {
@@ -41,13 +42,13 @@ var createUsers = function () {
 
 // Открытие карты
 var mapBlock = document.querySelector('.map');
-// mapBlock.classList.remove('map--faded');
 
 // Создание маркера
+var pinUsers = document.querySelector('.map__pins');
 var pinMarker = document.querySelector('#pin').content.querySelector('.map__pin');
 var renderPin = function (user) {
   var pinElement = pinMarker.cloneNode(true);
-  pinElement.style = 'left:' + (user.location.x - PIN_WIDTH / 2) + 'px;top:' + (user.location.y - PIN_HEIGHT + 60) + 'px;';
+  pinElement.style = 'left:' + (user.location.x - PIN_WIDTH / 2) + 'px;top:' + (user.location.y - PIN_HEIGHT + MAIN_PIN_SIZE) + 'px;';
   pinElement.querySelector('img').setAttribute('src', user.author.avatar);
   pinElement.querySelector('img').setAttribute('alt', 'Здесь будет объявление');
   return pinElement;
@@ -56,11 +57,9 @@ var renderPin = function (user) {
 // Вставка маркеров на карту
 var fragment = document.createDocumentFragment();
 var users = createUsers();
-
 for (var i = 0; i < 8; i++) {
   fragment.appendChild(renderPin(users[i]));
 }
-var pinUsers = document.querySelector('.map__pins');
 pinUsers.appendChild(fragment);
 
 // ДЗ Личный проект: подробности
@@ -73,8 +72,8 @@ var PIN_MARKERS = document.querySelectorAll('.map__pin');
 // Функция добавляет атрибут disabled полям формы и прячет маркеры пользователей
 /**
  * Функция добавляет атрибут disabled полям формы и прячет маркеры пользователей
- * @param {element} element - всем html элементам fieldset
- * @return {*}
+ * @param{element} element - всем html элементам fieldset
+ * @return{*}
  */
 var blockElement = function (element) {
   for (var j = 0; j < element.length; j++) {
@@ -89,13 +88,12 @@ var blockElement = function (element) {
 blockElement(fieldsets);
 
 // Перевод страницы в активный режим
-
 var mapPinMain = document.querySelector('.map__pin--main');
 
 // Функция получения координат
 /**
  * Функция получения координат
- * @param {number} elem
+ * @param {string} elem
  * @return {{top: number, left: number}}
  */
 function getCoordinates(elem) {
@@ -114,7 +112,7 @@ var setCoordinates = function () {
   var coordY = mapPinCoordinates.top;
   document.querySelector('#address').value = coordX + ',' + coordY;
 };
-setCoordinates('#address');
+setCoordinates();
 
 // ДЗ Личный проект: доверяй, но проверяй (Валидация формы)
 // Функция валидации поля заголовка объявления
@@ -123,11 +121,6 @@ function validTitle() {
   var length = input.value.length;
   return length >= 30 && length < 100;
 }
-validTitle();
-// Если поле валидно, функция возвращает true иначе false
-// function formValid() {
-//   return validTitle() && true;
-// }
 
 // Функция валидации полей типа жилья и цены за ночь
 var listHousing = searchForm.querySelector('#type');
@@ -143,9 +136,11 @@ listHousing.addEventListener('change', function () {
   inputPrice.placeholder = minPrice[listHousing.value.toUpperCase()];
 });
 
-inputPrice.addEventListener('change', function () {
-  inputPrice.disabled = true;
-});
+// Функция валидации поля с ценой за сутки
+function validPrice() {
+  var input = searchForm.querySelector('#price');
+  return length >= 0 && +input.value < 1000000;
+}
 
 // Функция синхронизации полей времени заезда и выезда
 (function () {
@@ -160,12 +155,16 @@ inputPrice.addEventListener('change', function () {
   });
 })();
 
+// Функция блокировка поля с адресом, что бы пользователь не мог внести изменения вручную.
+searchForm.querySelector('#address').addEventListener('mousedown', function (event) {
+  event.preventDefault();
+});
+
 // Функция перемещения маркера, и активация страницы
 mapPinMain.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   // Активация карты
   mapBlock.classList.remove('map--faded');
-  searchForm.querySelector('#address').setAttribute('disabled', 'disabled');
   // Поучение начальных координат метки
   var startCoords = {
     x: evt.clientX,
@@ -179,7 +178,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
    * @param{number} minValue минимальное значение диапазона
    * @param{number} maxValue максимальное значение диапазона
    * @return{number}
-  */
+   */
   var checksRangeCoords = function (validCoord, minValue, maxValue) {
     var testCoord = validCoord;
     if (testCoord < minValue) {
@@ -211,7 +210,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
       var coordY = mapPinMain.offsetTop - shift.y;
       document.querySelector('#address').value = coordX + '' + ',' + coordY;
     };
-    setCoordinatesMove('#address');
+    setCoordinatesMove();
   };
   // Функция отпускает метку и активирует других пользователей, убирая атрибут disabled
   var onMouseUp = function (upEvt) {
@@ -236,11 +235,14 @@ mapPinMain.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
-// Пока оставил закомментированным, не знаю как реализовать
-// searchForm.addEventListener('submit', function (evt) {
-//   evt.preventDefault();
-//
-//   if (formValid()) {
-//     // sendServer()
-//   }
-// });
+
+function formValid() {
+  return validPrice() && validTitle();
+}
+
+// Функция проверки валидации формы
+searchForm.addEventListener('submit', function (evt) {
+  if (!formValid()) {
+    evt.preventDefault();
+  }
+});
