@@ -118,8 +118,19 @@ setCoordinates();
 // Функция валидации поля заголовка объявления
 function validTitle() {
   var input = searchForm.querySelector('#title');
+  // var label = searchForm.querySelector('.ad-form__label');
   var length = input.value.length;
-  return length >= 30 && length < 100;
+  var isValid = length >= 30 && length < 100;
+
+  if (isValid) {
+    return true;
+  }
+  // input.placeholder = input.value = 'Неверное значение';
+  input.placeholder = input.value = 'Неверное значение';
+  // input.style = 'background-color: rgba(255, 0, 0, 0.5)';
+  input.focus();
+  // input.classList.add('error__button'); // error
+  return false;
 }
 
 // Функция валидации полей типа жилья и цены за ночь
@@ -133,13 +144,26 @@ var minPrice = {
 };
 
 listHousing.addEventListener('change', function () {
-  inputPrice.placeholder = minPrice[listHousing.value.toUpperCase()];
+  var attributeValue = minPrice[listHousing.value.toUpperCase()];
+  inputPrice.setAttribute('min', attributeValue);
+  inputPrice.placeholder = attributeValue;
 });
 
 // Функция валидации поля с ценой за сутки
 function validPrice() {
   var input = searchForm.querySelector('#price');
-  return length >= 0 && +input.value < 1000000;
+  // var label = searchForm.querySelector('.ad-form__label');
+  var isValid = length >= 0 && +input.value < 1000000;
+
+  if (isValid) {
+    return true;
+  }
+  input.placeholder = input.value = 'Неверное значение';
+  // input.setCustomValidity('Ошибка ввода данных');
+  // input.style = 'background-color: rgba(255, 0, 0, 0.5)';
+  input.focus();
+  // input.classList.add('error__button'); // error
+  return false;
 }
 
 // Функция синхронизации полей времени заезда и выезда
@@ -208,7 +232,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
     var setCoordinatesMove = function () {
       var coordX = mapPinMain.offsetLeft - shift.x;
       var coordY = mapPinMain.offsetTop - shift.y;
-      document.querySelector('#address').value = coordX + '' + ',' + coordY;
+      document.querySelector('#address').value = coordX + ',' + coordY;
     };
     setCoordinatesMove();
   };
@@ -235,6 +259,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
+
 
 function formValid() {
   return validPrice() && validTitle();
