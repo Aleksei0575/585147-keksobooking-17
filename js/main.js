@@ -120,7 +120,6 @@ setCoordinates();
 // Функция валидации поля заголовка объявления
 function validTitle() {
   var input = searchForm.querySelector('#title');
-  // var label = searchForm.querySelector('.ad-form__label');
   var length = input.value.length;
   var isValid = length >= 30 && length < 100;
 
@@ -129,7 +128,6 @@ function validTitle() {
   }
   // input.placeholder = input.value = 'Неверное значение';
   input.placeholder = input.value = 'Неверное значение';
-  // input.style = 'background-color: rgba(255, 0, 0, 0.5)';
   input.focus();
   // input.classList.add('error__button'); // error
   return false;
