@@ -55,12 +55,14 @@ var renderPin = function (user) {
 };
 
 // Вставка маркеров на карту
-var fragment = document.createDocumentFragment();
+
 var users = createUsers();
+var fragment = document.createDocumentFragment();
 for (var i = 0; i < 8; i++) {
   fragment.appendChild(renderPin(users[i]));
+  pinUsers.appendChild(fragment);
 }
-pinUsers.appendChild(fragment);
+
 
 // ДЗ Личный проект: подробности
 // Здесь поиск формы на странице и элемента в форме
@@ -152,14 +154,13 @@ listHousing.addEventListener('change', function () {
 // Функция валидации поля с ценой за сутки
 function validPrice() {
   var input = searchForm.querySelector('#price');
-  // var label = searchForm.querySelector('.ad-form__label');
-  var isValid = length >= 0 && +input.value < 1000000;
+  var isValid = inputPrice.getAttribute('min') >= 0 && +input.value < 1000000;
 
   if (isValid) {
     return true;
   }
-  input.placeholder = input.value = 'Неверное значение';
-  // input.setCustomValidity('Ошибка ввода данных');
+  // input.placeholder = input.value = 'Неверное значение';
+  input.setCustomValidity('Ошибка ввода данных');
   // input.style = 'background-color: rgba(255, 0, 0, 0.5)';
   input.focus();
   // input.classList.add('error__button'); // error
@@ -262,7 +263,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
 
 
 function formValid() {
-  return validPrice() && validTitle();
+  return validTitle() && validPrice();
 }
 
 // Функция проверки валидации формы
