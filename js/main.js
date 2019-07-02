@@ -174,18 +174,33 @@ function validPrice() {
   return false;
 }
 
-// Функция синхронизации полей времени заезда и выезда
-(function () {
-  var listTimeIn = searchForm.querySelector('#timein');
-  var listTimeOut = searchForm.querySelector('#timeout');
+// Функция синхронизации полей времени заезда и выезда 1 вариант
+// (function () {
+//   var listTimeIn = searchForm.querySelector('#timein');
+//   var listTimeOut = searchForm.querySelector('#timeout');
+//
+//   listTimeIn.addEventListener('change', function () {
+//     listTimeOut.selectedIndex = listTimeIn.selectedIndex;
+//   });
+//   listTimeOut.addEventListener('change', function () {
+//     listTimeIn.selectedIndex = listTimeOut.selectedIndex;
+//   });
+// })();
 
-  listTimeIn.addEventListener('change', function () {
-    listTimeOut.selectedIndex = listTimeIn.selectedIndex;
-  });
-  listTimeOut.addEventListener('change', function () {
-    listTimeIn.selectedIndex = listTimeOut.selectedIndex;
-  });
-})();
+// Второй вариант
+var listTimeIn = searchForm.querySelector('#timein');
+var listTimeOut = searchForm.querySelector('#timeout');
+var getSameValue = function (select1, select2) {
+  select2.value = select1.value; // дл¤ списка2 делаем выбранным пункт с тем же значением value, что и выбранный пункт списка1
+};
+
+// синхронизируем изменени¤ в полях Время заезда и Время выезда
+listTimeIn.addEventListener('change', function () {
+  getSameValue(listTimeIn, listTimeOut);
+});
+listTimeOut.addEventListener('change', function () {
+  getSameValue(listTimeOut, listTimeIn);
+});
 
 // Функция блокировка поля с адресом, что бы пользователь не мог внести изменения вручную.
 searchForm.querySelector('#address').addEventListener('mousedown', function (event) {
