@@ -13,14 +13,14 @@ var generateNum = function (min, max) {
 };
 
 // Функция создания одного пользователя
-var createUser = function (author, offer) {
+var createUser = function (adsNumber) {
   return {
     'author': {
-      'avatar': 'img/avatars/user' + author + '.png'
+      'avatar': 'img/avatars/user' + adsNumber + '.png'
     },
 
     'offer': {
-      'type': offer
+      'type': ['plase', 'flat', 'house', 'bungalo']
     },
 
     'location': {
@@ -33,9 +33,9 @@ var createUser = function (author, offer) {
 // Создание массива данных о пользователях из объектов-данных
 var createUsers = function () {
   var arrayUsers = [];
-  var offer = ['plase', 'flat', 'house', 'bungalo'];
+  // var offer = ['plase', 'flat', 'house', 'bungalo'];
   for (var i = 0; i < 8; i++) {
-    arrayUsers.push(createUser('0' + (i + 1), offer[i]));
+    arrayUsers.push(createUser('0' + (i + 1)));
   }
   return arrayUsers;
 };
