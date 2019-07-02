@@ -24,7 +24,14 @@
     // Количество объявлений, которые необходиом сгенерировать
     NUMBER_ADS: 8,
     // Массив с типом жилья
-    OFFER: ['palace', 'flat', 'house', 'bungalo']
+    OFFER: ['palace', 'flat', 'house', 'bungalo'],
+    // объект зависимости минимальной стоимости от типа жилья
+    minPriceMap: {
+      'bungalo': 0,
+      'flat': 1000,
+      'house': 5000,
+      'palace': 10000
+    }
   };
 
 })();
