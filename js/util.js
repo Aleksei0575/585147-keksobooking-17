@@ -12,7 +12,9 @@
     },
     // Функция будет генерировать случайный число
     getGenerateNum: function (min, max) {
-      return Math.floor(min - 0.5 + Math.random() * (max - min + 1));
+      var rand = min - 0.5 + Math.random() * (max - min + 1);
+      rand = Math.round(rand);
+      return rand;
     },
     // Функция добавления элементам DOM атрибута disabled
     addDisabled: function (el) {

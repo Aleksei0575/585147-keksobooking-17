@@ -11,7 +11,7 @@
   // Функция создает одного пользователя
   var createUser = function (adsNumber) {
     return {
-      'autor': {
+      'author': {
         'avatar': 'img/avatars/user' + adsNumber + '.png'
       },
 

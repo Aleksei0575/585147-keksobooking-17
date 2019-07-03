@@ -5,13 +5,15 @@
   var MAIN_PIN = window.util.MAP_BLOCK.querySelector('.map__pin--main');
 
   // Начальные координаты главной метки при неактивной странице
-  var MAIN_PIN_COORD_X = MAIN_PIN.offsetLeft + window.param.MAIN_PIN_SIZE / 2;
-  var MAIN_PIN_COORD_Y = MAIN_PIN.offsetTop + window.param.MAIN_PIN_SIZE / 2;
+  // var MAIN_PIN_COORD_X = MAIN_PIN.offsetLeft + window.param.MAIN_PIN_SIZE / 2;
+  var MAIN_PIN_COORD_X = MAIN_PIN.offsetLeft;
+  // var MAIN_PIN_COORD_Y = MAIN_PIN.offsetTop + window.param.MAIN_PIN_SIZE / 2;
+  var MAIN_PIN_COORD_Y = MAIN_PIN.offsetTop;
 
   // Координата Y (верхний левй угол метки на карте(диапазон по Y))
   var LocationY = {
-    MIN: window.param.LocationY.MIN - window.param.MAIN_PIN_HEIGHT,
-    MAX: window.param.LocationY.MAX - window.param.MAIN_PIN_HEIGHT
+    MIN: window.param.LocationY.MIN,
+    MAX: window.param.LocationY.MAX
   };
 
   // Координата X (верхний левй угол метки на карте(диапазон по X))
@@ -40,7 +42,7 @@
 
   // Функция передающая в поле с адресом координаты передвинутой, главной метки при активной странице
   var getMoveCoordinates = function () {
-    adsFormAddress.value = (MAIN_PIN.offsetLeft + window.param.MAIN_PIN_WIDTH / 2) + ',' + (MAIN_PIN.offsetTop + window.param.MAIN_PIN_HEIGHT);
+    adsFormAddress.value = (MAIN_PIN.offsetLeft + window.param.MAIN_PIN_WIDTH / 2 - 0.5) + ',' + (MAIN_PIN.offsetTop + window.param.MAIN_PIN_HEIGHT);
   };
 
   /* Функция задает параметры блока в котором будет перемещаться метка.
