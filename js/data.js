@@ -38,10 +38,10 @@
     }
   };
 
-  /*var randomAdsUsers = [];
-  for (var i = 0; i < window.param.NUMBER_ADS; i++) {
-    randomAdsUsers.push(createUser('0' + (i + 1)));
-  }
-  window.data = arrayUsers;*/
+  // var randomAdsUsers = [];
+  // for (var i = 0; i < window.param.NUMBER_ADS; i++) {
+  //   randomAdsUsers.push(createUser('0' + (i + 1)));
+  // }
+  // window.data = arrayUsers;
 
 })();
