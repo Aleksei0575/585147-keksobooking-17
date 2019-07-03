@@ -2,7 +2,7 @@
 
 // В этом модуле создаются данные для объявлений случайных пользователей
 (function () {
-  // Параметры координаты метки других пользователей
+  // Параметры координаты метки других пользователей(диапазон MIN, MAX)
   var LocationMarkerX = {
     MIN: window.param.PIN_WIDTH / 2,
     MAX: window.util.MAP_BLOCK.offsetWidth - window.param.PIN_WIDTH / 2
@@ -27,10 +27,21 @@
   };
 
   // Создание массива из случайных пользователей
-  var randomAdsUsers = [];
+
+  window.data = {
+    createUsers: function (quantityAds) {
+      var arrayUsers = [];
+      for (var i = 0; i < quantityAds; i++) {
+        arrayUsers.push(createUser('0' + (i + 1)));
+      }
+      return arrayUsers;
+    }
+  };
+
+  /*var randomAdsUsers = [];
   for (var i = 0; i < window.param.NUMBER_ADS; i++) {
     randomAdsUsers.push(createUser('0' + (i + 1)));
   }
-  window.data = randomAdsUsers;
+  window.data = arrayUsers;*/
 
 })();

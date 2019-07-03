@@ -146,7 +146,7 @@
       }
 
       // Отрисовка маркеров на странице
-      window.pin.getUsers(window.param.NUMBER_ADS, window.data);
+      window.pin.getUsers(window.param.NUMBER_ADS);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
