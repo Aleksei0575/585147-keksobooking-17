@@ -10,13 +10,6 @@
   var formFieldTimeIn = window.util.searchForm.querySelector('#timein');
   var formFieldTimeOut = window.util.searchForm.querySelector('#timeout');
 
-  window.form = {
-    // Функция выбора цены от типа жилья
-    getPrice: function (object) {
-      formFieldPrice.min = object[formFieldType.value];
-      formFieldPrice.placeholder = object[formFieldType.value];
-    }
-  };
   // Событие изменения в поле
   formFieldType.addEventListener('change', function () {
     window.form.getPrice(window.param.minPriceMap);
@@ -73,5 +66,13 @@
       evt.preventDefault();
     }
   });
+
+  window.form = {
+    // Функция выбора цены от типа жилья
+    getPrice: function (object) {
+      formFieldPrice.min = object[formFieldType.value];
+      formFieldPrice.placeholder = object[formFieldType.value];
+    }
+  };
 
 })();
