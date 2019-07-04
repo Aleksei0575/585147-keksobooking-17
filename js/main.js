@@ -13,14 +13,14 @@ var generateNum = function (min, max) {
 };
 
 // Функция создания одного пользователя
-var createUser = function (author, offer) {
+var createUser = function (adsNumber) {
   return {
     'author': {
-      'avatar': 'img/avatars/user' + author + '.png'
+      'avatar': 'img/avatars/user' + adsNumber + '.png'
     },
 
     'offer': {
-      'type': offer
+      'type': ['plase', 'flat', 'house', 'bungalo']
     },
 
     'location': {
@@ -33,9 +33,9 @@ var createUser = function (author, offer) {
 // Создание массива данных о пользователях из объектов-данных
 var createUsers = function () {
   var arrayUsers = [];
-  var offer = ['plase', 'flat', 'house', 'bungalo'];
+  // var offer = ['plase', 'flat', 'house', 'bungalo'];
   for (var i = 0; i < 8; i++) {
-    arrayUsers.push(createUser('0' + (i + 1), offer[i]));
+    arrayUsers.push(createUser('0' + (i + 1)));
   }
   return arrayUsers;
 };
@@ -55,14 +55,12 @@ var renderPin = function (user) {
 };
 
 // Вставка маркеров на карту
-
 var users = createUsers();
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < 8; i++) {
   fragment.appendChild(renderPin(users[i]));
   pinUsers.appendChild(fragment);
 }
-
 
 // ДЗ Личный проект: подробности
 // Здесь поиск формы на странице и элемента в форме
@@ -133,20 +131,31 @@ function validTitle() {
   return false;
 }
 
-// Функция валидации полей типа жилья и цены за ночь
+// Функция выбора цены от типа жилья
 var listHousing = searchForm.querySelector('#type');
 var inputPrice = searchForm.querySelector('#price');
-var minPrice = {
+var minPriceMap = {
   BUNGALO: 0,
   FLAT: 1000,
   HOUSE: 5000,
   PALACE: 10000,
 };
 
+// Функция выбора цены от типа жилья (1 вариант)
+// listHousing.addEventListener('change', function () {
+//   var attributeValue = minPriceMap[listHousing.value.toUpperCase()];
+//   inputPrice.setAttribute('min', attributeValue);
+//   inputPrice.placeholder = attributeValue;
+// });
+
+// Функция выбора цены от типа жилья (2 вариант)
+var getPrice = function () {
+  inputPrice.min = minPriceMap[listHousing.value.toUpperCase()];
+  inputPrice.placeholder = minPriceMap[listHousing.value.toUpperCase()];
+};
+
 listHousing.addEventListener('change', function () {
-  var attributeValue = minPrice[listHousing.value.toUpperCase()];
-  inputPrice.setAttribute('min', attributeValue);
-  inputPrice.placeholder = attributeValue;
+  getPrice(minPriceMap);
 });
 
 // Функция валидации поля с ценой за сутки
@@ -165,18 +174,33 @@ function validPrice() {
   return false;
 }
 
-// Функция синхронизации полей времени заезда и выезда
-(function () {
-  var listTimeIn = searchForm.querySelector('#timein');
-  var listTimeOut = searchForm.querySelector('#timeout');
+// Функция синхронизации полей времени заезда и выезда 1 вариант
+// (function () {
+//   var listTimeIn = searchForm.querySelector('#timein');
+//   var listTimeOut = searchForm.querySelector('#timeout');
+//
+//   listTimeIn.addEventListener('change', function () {
+//     listTimeOut.selectedIndex = listTimeIn.selectedIndex;
+//   });
+//   listTimeOut.addEventListener('change', function () {
+//     listTimeIn.selectedIndex = listTimeOut.selectedIndex;
+//   });
+// })();
 
-  listTimeIn.addEventListener('change', function () {
-    listTimeOut.selectedIndex = listTimeIn.selectedIndex;
-  });
-  listTimeOut.addEventListener('change', function () {
-    listTimeIn.selectedIndex = listTimeOut.selectedIndex;
-  });
-})();
+// Второй вариант
+var listTimeIn = searchForm.querySelector('#timein');
+var listTimeOut = searchForm.querySelector('#timeout');
+var getSameValue = function (select1, select2) {
+  select2.value = select1.value; // дл¤ списка2 делаем выбранным пункт с тем же значением value, что и выбранный пункт списка1
+};
+
+// синхронизируем изменени¤ в полях Время заезда и Время выезда
+listTimeIn.addEventListener('change', function () {
+  getSameValue(listTimeIn, listTimeOut);
+});
+listTimeOut.addEventListener('change', function () {
+  getSameValue(listTimeOut, listTimeIn);
+});
 
 // Функция блокировка поля с адресом, что бы пользователь не мог внести изменения вручную.
 searchForm.querySelector('#address').addEventListener('mousedown', function (event) {
