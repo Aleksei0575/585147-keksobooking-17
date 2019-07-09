@@ -97,10 +97,11 @@
   };
 
   var onDateLoad = function (loadingSuccess) {
-    window.param.datesList = loadingSuccess;
+    window.param.datesList = loadingSuccess.filter(function (it) {
+      return it.offer;
+    });
     window.pin.getUsers(window.param.datesList.slice(0, window.param.MAX_ADS_QUANTITY));
   };
-
 
   // Перевод страницы в некативное состояние
   pageLock();
