@@ -7,11 +7,14 @@
   var pinUsers = window.util.MAP_BLOCK.querySelector('.map__pins');
   var pinMarkerTemplate = document.querySelector('#pin').content.querySelector('button');
   var ESC_KEYCODE = 27;
+  var isDrawingPin = false; // флаг, показывающий была ли уже отрисовка пинов
+
   // var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   // Функция создает новый элемент из шаблона
   var renderPin = function (user) {
     var pinElement = pinMarkerTemplate.cloneNode(true);
+    pinElement.classList.add('map__pin--drawing');
     pinElement.style.left = user.location.x - window.param.PIN_WIDTH / 2 + 'px';
     pinElement.style.top = user.location.y - window.param.PIN_HEIGHT + window.param.MAIN_PIN_SIZE + 'px';
 
@@ -101,10 +104,19 @@
     return pinElement;
   };
 
+  // Удаляем ранее отрисованные пины из разметки
+  var delPin = function () {
+    window.util.deleteNodeList(pinUsers, '.map__pin--drawing');
+  };
+
   // Вставка маркеров на карту
   // var users = window.data.createUsers(window.param.NUMBER_ADS);
   window.pin = {
     getUsers: function (arrAds) {
+      if (isDrawingPin) {
+        window.pin.clear();
+      }
+
       var fragment = document.createDocumentFragment();
       for (var i = 0; i < arrAds.length; i++) {
         if (arrAds[i].offer) {
@@ -113,7 +125,9 @@
 
         pinUsers.appendChild(fragment);
       }
-    }
+    },
+
+    clear: delPin
   };
 
 })();
