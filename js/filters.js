@@ -10,9 +10,17 @@
   var housingType = window.filters.mapFilters.querySelector('#housing-type');
   var housingPrice = window.filters.mapFilters.querySelector('#housing-price');
 
+  // Подготовлено, но пока еще не реализовано => будет реализовано в следующем задании
+  // var housingRooms = window.filters.mapFilters.querySelector('#housing-rooms');
+  // var housingGuests = window.filters.mapFilters.querySelector('#housing-guests');
+
   // присваиваем текущее значение переменным
   var typeValue = housingType.value;
   var priceValue = housingPrice.value;
+
+  // Подготовлено, но пока еще не реализовано => будет реализовано в следующем задании
+  // var roomsValue = housingRooms.value;
+  // var guestsValue = housingGuests.value;
 
   // невыбранное значение фильтра
   var anyValue = 'any';
@@ -21,19 +29,19 @@
   var filterDataValue = [];
 
   // Функция отрисовки отфильтрованных объявлений
-  var updateDatesList = function () {
-    window.pin.getUsers(filterDataValue.slice(0, (window.param.MAX_ADS_QUANTITY)));
-  };
+  // var updateDatesList = function () {
+  //   window.pin.getUsers(filterDataValue.slice(0, (window.param.MAX_ADS_QUANTITY)));
+  // };
 
   // объект для хранения зависимости выбранного фильтра и функции, изменяющей соответствующую переменную
-  var selectedValueAndFunc = {
-    'housing-type': function (val) {
-      typeValue = val;
-    },
-    'housing-price': function (val) {
-      priceValue = val;
-    }
-  };
+  // var selectedValueAndFunc = {
+  //   'housing-type': function (val) {
+  //     typeValue = val;
+  //   },
+  //   'housing-price': function (val) {
+  //     priceValue = val;
+  //   }
+  // };
 
   // объект переводит значаение "Стоимость" в цифры
   var priceNumberMap = {
@@ -51,14 +59,14 @@
   };
 
   // Функция сравнения отдельных параметров фильтрации
-  // сравнивает тип жилья
-  var checkTypeChange = function (it) {
-    if (typeValue === anyValue) {
+  // Функция проверяет выбранное в фильтре значение
+  var checkTypeChange = function (value, type) {
+    // если фильтр еще не применен или значение соответствует выбранному типу
+    if (value === anyValue || type === value) {
       return true;
-    } else if (it.offer.type !== typeValue) {
-      return window.pin.clear();
     }
-    return it.offer.type === typeValue;
+    // убирает метки не соответствующие выбранному типу жилья
+    return !!window.pin.clear();
   };
 
   // сравнивает стоимость жилья
@@ -72,21 +80,26 @@
   };
 
   // Добавим обработчик события на всю форму
-  window.filters.mapFilters.addEventListener('change', function (evt) {
-    selectedValueAndFunc[evt.target.name](evt.target.value);
+  window.filters.mapFilters.addEventListener('change', function () {
+    // selectedValueAndFunc[evt.target.name](evt.target.value);
+    typeValue = housingType.value;
+    priceValue = housingPrice.value;
 
+    // Подготовлено но пока еще не реализовано => будет реализовано в следующем задании
+    // roomsValue = housingRooms.value;
+    // guestsValue = housingGuests.value;
 
     // фильтрация данных
     filterDataValue = window.param.datesList.filter(function (ad) {
-      return checkTypeChange(ad) && checkPriceChange(ad);
+      // return checkTypeChange(ad) && checkPriceChange(ad);
+      return checkTypeChange(typeValue, ad.offer.type) && checkPriceChange(ad);
     });
 
     // отрисовка меток после фильтрации
-    updateDatesList();
-    window.debounce(updateDatesList);
-    // window.debounce(function () {
-    //   updateDatesList();
-    // });
+    // window.debounce(updateDatesList); - было так сделана отрисовка
+    window.debounce(function () {
+      window.pin.getUsers(filterDataValue);
+    });
   });
 
 })();
