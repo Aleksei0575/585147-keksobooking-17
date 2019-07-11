@@ -23,8 +23,6 @@
   // Функция отрисовки отфильтрованных объявлений
   var updateDatesList = function () {
     window.pin.getUsers(filterDataValue.slice(0, (window.param.MAX_ADS_QUANTITY)));
-    // updateDatesList();
-    // window.pin.clear();
   };
 
   // объект для хранения зависимости выбранного фильтра и функции, изменяющей соответствующую переменную
@@ -57,6 +55,8 @@
   var checkTypeChange = function (it) {
     if (typeValue === anyValue) {
       return true;
+    } else if (it.offer.type !== typeValue) {
+      return window.pin.clear();
     }
     return it.offer.type === typeValue;
   };
@@ -83,6 +83,10 @@
 
     // отрисовка меток после фильтрации
     updateDatesList();
+    window.debounce(updateDatesList);
+    // window.debounce(function () {
+    //   updateDatesList();
+    // });
   });
 
 })();
