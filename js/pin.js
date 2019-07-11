@@ -118,8 +118,8 @@
       }
 
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < arrAds.length; i++) {
-        if (arrAds[i].offer) {
+      for (var i = 0; i < window.param.MAX_ADS_QUANTITY; i++) {
+        if (arrAds[i]) {
           fragment.appendChild(renderPin(arrAds[i]));
         }
 
