@@ -4,12 +4,12 @@
 (function () {
   // Поля формы с которыми будем работать
   var formFieldTitle = window.util.searchForm.querySelector('#title');
-  // var formFieldAddress = window.util.searchForm.querySelector('#address');
+  var formFieldAddress = window.util.searchForm.querySelector('#address');
   var formFieldType = window.util.searchForm.querySelector('#type');
   var formFieldPrice = window.util.searchForm.querySelector('#price');
   var formFieldTimeIn = window.util.searchForm.querySelector('#timein');
   var formFieldTimeOut = window.util.searchForm.querySelector('#timeout');
-  var formFieldRoomNumbe = window.util.searchForm.querySelector('#room_number');
+  var formFieldRoomNumber = window.util.searchForm.querySelector('#room_number');
   var formFieldCapacity = window.util.searchForm.querySelector('#capacity');
 
   // Событие изменения в поле
@@ -25,9 +25,15 @@
     formFieldTimeIn.selectedIndex = formFieldTimeOut.selectedIndex;
   });
 
+  // Функция блокировка поля с адресом, что бы пользователь не мог внести изменения вручную.
+  formFieldAddress.addEventListener('mousedown', function (event) {
+    event.preventDefault();
+  });
+
+
   // Функция синхронизации поля «Количество комнат» с полем «Количество мест»
   // Значения по умолчанию
-  if (formFieldRoomNumbe.value === '1') {
+  if (formFieldRoomNumber.value === '1') {
     formFieldCapacity.item(0).style = 'display: none';
     formFieldCapacity.item(1).style = 'display: none';
     formFieldCapacity.item(2).removeAttribute('style');
@@ -35,26 +41,26 @@
     formFieldCapacity.item(3).style = 'display: none';
   }
   // При выборе количества комнат
-  formFieldRoomNumbe.addEventListener('change', function () {
-    if (formFieldRoomNumbe.value === '1') {
+  formFieldRoomNumber.addEventListener('change', function () {
+    if (formFieldRoomNumber.value === '1') {
       formFieldCapacity.item(0).style = 'display: none';
       formFieldCapacity.item(2).removeAttribute('style');
       formFieldCapacity.item(2).selected = 'selected';
       formFieldCapacity.item(1).style = 'display: none';
       formFieldCapacity.item(3).style = 'display: none';
-    } else if (formFieldRoomNumbe.value === '2') {
+    } else if (formFieldRoomNumber.value === '2') {
       formFieldCapacity.item(1).removeAttribute('style');
       formFieldCapacity.item(1).selected = 'selected';
       formFieldCapacity.item(2).removeAttribute('style');
       formFieldCapacity.item(0).style = 'display: none';
       formFieldCapacity.item(3).style = 'display: none';
-    } else if (formFieldRoomNumbe.value === '3') {
+    } else if (formFieldRoomNumber.value === '3') {
       formFieldCapacity.item(0).removeAttribute('style');
       formFieldCapacity.item(0).selected = 'selected';
       formFieldCapacity.item(1).removeAttribute('style');
       formFieldCapacity.item(2).removeAttribute('style');
       formFieldCapacity.item(3).style = 'display: none';
-    } else if (formFieldRoomNumbe.value === '100') {
+    } else if (formFieldRoomNumber.value === '100') {
       formFieldCapacity.item(0).style = 'display: none';
       formFieldCapacity.item(1).style = 'display: none';
       formFieldCapacity.item(2).style = 'display: none';

@@ -23,6 +23,13 @@
     // Функция убирает атрибут disabled у DOM-элементов
     removeDisabled: function (el) {
       el.disabled = false;
+    },
+    // Функция удаляет узел из DOM-дерева
+    deleteNodeList: function (parentEl, selectors) {
+      var nodeArray = Array.prototype.slice.call(parentEl.querySelectorAll(selectors));
+      nodeArray.forEach(function (node) {
+        node.remove();
+      });
     }
   };
 
