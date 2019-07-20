@@ -3,7 +3,7 @@
 // Модуль отрисовки объявлений
 (function () {
   var cardAds;
-  var ESC_KEYCODE = 27;
+  // var ESC_KEYCODE = 27;
 
   // Тип жилья
   var typrHousing = window.param.type;
@@ -92,8 +92,9 @@
   var fillAvatarUser = function (field, source) {
     if (source) {
       field.src = source;
+    } else {
+      field.style.display = 'none';
     }
-    field.style.display = 'none';
   };
 
   // Функция закрывает модальное окно
@@ -107,12 +108,8 @@
 
   // Закрытие модального окна по нажатию клавиши ESC
   var onPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      cardAds.remove();
-      document.removeEventListener('keydown', onPopupEscPress);
-      if (window.util.MAP_BLOCK.querySelector('.map__pin--active')) {
-        window.util.MAP_BLOCK.querySelector('.map__pin--active').classList.remove('.map__pin--active');
-      }
+    if (window.util.isKeydownEsc(evt)) {
+      popupClose();
     }
   };
   document.addEventListener('keydown', onPopupEscPress);
