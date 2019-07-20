@@ -2,6 +2,8 @@
 
 // В этом модуле находятся начальные данные DOM-элементов страницы
 (function () {
+  var MAIN_PIN = window.util.MAP_BLOCK.querySelector('.map__pin--main'); // главная метка
+
   window.param = {
     // Диапазон координаты Y для метки на карте
     LocationY: {
@@ -43,6 +45,21 @@
       'bungalo': 'Бунгало',
       'palace': 'Дворец',
       'house': 'Дом'
+    },
+
+    mainPin: MAIN_PIN,
+
+    // начальные координаты главной метки
+    MainPinInitial: {
+      X: MAIN_PIN.offsetLeft,
+      Y: MAIN_PIN.offsetTop
+    },
+
+    // Возврат главной метки в исходное положение
+    moveMainPinInitial: function () {
+
+      window.param.mainPin.style.top = window.param.MainPinInitial.Y + 'px';
+      window.param.mainPin.style.left = window.param.MainPinInitial.X + 'px';
     }
   };
 
