@@ -8,34 +8,38 @@
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
+  var successMessage;
+
   window.messages = {
     // Функция вывода сообщения об успешной отправке объявления
-    onSuccess: function (message) {
-      var successPatern = successTemplate.cloneNode(true);
-      var successMessage = successPatern.querySelector('.success__message');
-      successMessage.textContent = message;
+    onSuccess: function () {
+      successMessage = successTemplate.cloneNode(true);
+
+      document.addEventListener('keydown', keydownEsc);
+      document.addEventListener('click', onAreaClick);
 
       // Добавляем сообщение в разметку
-      mainTeg.insertAdjacentElement('afterbegin', successPatern);
+      mainTeg.insertAdjacentElement('afterbegin', successMessage);
 
       // Функция удаляет сообщение об успешном создании объявления
-      var delSuccess = function (evt) {
-        evt.preventDefault();
-        successPatern.remove();
+      var delSuccess = function () {
+        successMessage.remove();
+        document.addEventListener('keydown', keydownEsc);
+        document.addEventListener('click', onAreaClick);
       };
 
       // Функция закрывает окно с успешной отправкой
       // по нажатию на клавишу esc
       var keydownEsc = function (evt) {
-        if (evt.keyCode === ESC_KEYCODE) {
-          delSuccess(evt);
-          document.removeEventListener('keydown', keydownEsc);
+        evt.preventDefault();
+        if (window.util.isKeydownEsc()) {
+          delSuccess();
         }
       };
       // по нажатию на произвольную область окна
       var onAreaClick = function (evt) {
-        delSuccess(evt);
-        document.removeEventListener('click', onAreaClick);
+        evt.preventDefault();
+        delSuccess();
       };
 
       document.addEventListener('keydown', keydownEsc);
