@@ -165,4 +165,8 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  window.desactivatePage = {
+    pageLock: pageLock
+  };
+
 })();
