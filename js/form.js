@@ -12,6 +12,8 @@
   var formFieldRoomNumber = window.util.searchForm.querySelector('#room_number');
   var formFieldCapacity = window.util.searchForm.querySelector('#capacity');
 
+  var resetButton = window.util.searchForm.querySelector('.ad-form__reset'); // кнопка сброса
+
   // Событие изменения в поле
   formFieldType.addEventListener('change', function () {
     window.form.getPrice(window.param.minPriceMap);
@@ -101,6 +103,14 @@
     return false;
   }
 
+  window.form = {
+    // Функция выбора цены от типа жилья
+    getPrice: function (object) {
+      formFieldPrice.min = object[formFieldType.value];
+      formFieldPrice.placeholder = object[formFieldType.value];
+    }
+  };
+
   // Функция проверки валидации формы
   function formValid() {
     return validTitle() && validPrice();
@@ -111,14 +121,21 @@
     if (!formValid()) {
       evt.preventDefault();
     }
+    window.load(window.messages.onSuccess, window.messages.onError);
   });
 
-  window.form = {
-    // Функция выбора цены от типа жилья
-    getPrice: function (object) {
-      formFieldPrice.min = object[formFieldType.value];
-      formFieldPrice.placeholder = object[formFieldType.value];
-    }
-  };
+  // сброс формы
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
+    window.util.searchForm.reset(); // сброс формы
+
+    window.pin.clear(); // удаление меток
+    window.cardAds.remove(); // удаление карточки объявления
+    window.filters.mapFilters.reset(); // сброс фильтров
+
+    window.param.moveMainPinInitial(); // передвигаем метку в центр
+    window.desactivatePage.pageLock(); // переводим страницу в неактивное состояние
+  });
 
 })();
