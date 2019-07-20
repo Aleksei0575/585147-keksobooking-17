@@ -121,6 +121,7 @@
     if (!formValid()) {
       evt.preventDefault();
     }
+    evt.preventDefault();
     window.load(window.messages.onSuccess, window.messages.onError);
   });
 

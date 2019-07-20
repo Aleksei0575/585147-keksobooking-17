@@ -5,6 +5,7 @@
 (function () {
   window.util = {
     MAP_BLOCK: document.querySelector('.map'), // Поиск карты с объявлениями
+    mapLock: document.querySelector('.map__overlay'),
     searchForm: document.querySelector('.ad-form'), // Поиск формы добавления объявлений
     // Функция будет генерировать случайный элемент из массива
     getGenerateArrayItem: function (arr) {

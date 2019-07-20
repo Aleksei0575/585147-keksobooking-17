@@ -70,6 +70,10 @@
     for (i = 0; i < adsFormFieldset.length; i++) {
       window.util.addDisabled(adsFormFieldset[i]);
     }
+    // Изменяем уровень прозрачности карты
+    window.util.mapLock.style.opacity = '1';
+    // Изменяем уровень прозрачности формы
+    window.util.searchForm.classList.add('ad-form--disabled');
 
     // Передача в поле адрес координат при некативной странице
     getCoordinates();
@@ -94,6 +98,8 @@
     for (i = 0; i < adsFormFieldset.length; i++) {
       window.util.removeDisabled(adsFormFieldset[i]);
     }
+    // Изменяем уровень прозрачности карты
+    window.util.mapLock.style.opacity = '0';
   };
 
   var onDateLoad = function (loadingSuccess) {
