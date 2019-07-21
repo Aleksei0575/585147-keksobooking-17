@@ -164,7 +164,7 @@
 
       // Отрисовка маркеров на странице
       // window.pin.getUsers(window.param.NUMBER_ADS);
-      window.load(onDateLoad, window.messages.onError);
+      window.load(onDateLoad, window.messages.error);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
