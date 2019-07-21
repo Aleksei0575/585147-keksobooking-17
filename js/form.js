@@ -91,6 +91,7 @@
   function validPrice() {
     var input = window.util.searchForm.querySelector('#price');
     var isValid = input.getAttribute('min') >= 0 && +input.value < 1000000;
+    isValid = input.title = 'Введите значение цены цифрами в диапазоне от 0 до 1000000';
 
     if (isValid) {
       return true;
@@ -112,17 +113,16 @@
   };
 
   // Функция проверки валидации формы
-  function formValid() {
+  function isFormValid() {
     return validTitle() && validPrice();
   }
 
   // Проверка при отправке формы
   window.util.searchForm.addEventListener('submit', function (evt) {
-    if (!formValid()) {
-      evt.preventDefault();
-    }
     evt.preventDefault();
-    window.load(window.messages.onSuccess, window.messages.onError);
+    if (isFormValid()) {
+      window.load(window.messages.success, window.messages.error);
+    }
   });
 
   // сброс формы
