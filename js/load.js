@@ -44,7 +44,7 @@
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполнится за ' + xhr.timeout + 'мс');
     });
-    xhr.timeout = 50000; // выставлен таймаут в 10 с
+    xhr.timeout = 10000; // выставлен таймаут в 10 с
     xhr.open('POST', URL_DATA_SAVING); // Указываем как и куда обращаемся
     xhr.send(); // Запускаем процесс отправки запроса на сервер
   };
