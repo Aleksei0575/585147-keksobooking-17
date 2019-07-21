@@ -111,9 +111,12 @@
     if (window.util.isKeydownEsc(evt)) {
       popupClose();
     }
+    // document.removeEventListener('keydown', onPopupEscPress);
   };
-  document.addEventListener('keydown', onPopupEscPress);
+  // document.addEventListener('keydown', onPopupEscPress);
 
+  // Удалить обработчик 'keydown'
+  document.removeEventListener('keydown', onPopupEscPress);
   // Функция удаления карточки из разметки
   var removeCardAds = function () {
     if (cardAds) {
