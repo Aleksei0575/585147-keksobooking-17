@@ -28,11 +28,11 @@
   // Функция проверяет выбранное в фильтре значение
   var checkTypeChange = function (value, type) {
     // если фильтр еще не применен или значение соответствует выбранному типу
-    if (value === anyValue || type === value) {
-      return true;
-    }
+    // if (value === anyValue || type === value) {
+    return (value === anyValue || type === value);
+    // }
     // убирает метки не соответствующие выбранному типу жилья
-    return !!window.pin.clear();
+    // return !!window.pin.clear();
   };
 
   // сравнивает стоимость жилья
@@ -48,29 +48,29 @@
   // сравнивает количество комнат
   var checkRoomsChange = function (value, rooms) {
     // если фильтр еще не применен или значение соответствует выбранному количеству комнат
-    if (value === anyValue || rooms.toString() === value) {
-      return true;
-    }
+    // if (value === anyValue || rooms.toString() === value) {
+    return (value === anyValue || rooms.toString() === value);
+    // }
     // убирает метки не соответствующие выбранному количеству комнат
-    return !!window.pin.clear();
+    // return !!window.pin.clear();
   };
 
   // сравнивает число гостей
   var checkGuestsChange = function (value, guests) {
     // если фильтр еще не применен или значение соответствует выбранному количеству комнат
-    if (value === anyValue || guests.toString() === value) {
-      return true;
-    }
+    // if (value === anyValue || guests.toString() === value) {
+    return (value === anyValue || guests.toString() === value);
+    // }
     // убирает метки не соответствующие выбранному количеству комнат
-    return !!window.pin.clear();
+    // return !!window.pin.clear();
   };
 
   // функция сравнивает выбранные удобства
-  var checkFacilities = function (input, el) {
-    if (!input.checked || el.offer.features.indexOf(input.value) !== -1) {
-      return true;
-    }
-    return !!window.pin.clear();
+  var checkFacilities = function (input, features) {
+    // if (!input.checked || features.indexOf(input.value) !== -1) {
+    return (!input.checked || features.indexOf(input.value) !== -1);
+    // }
+    // return !!window.pin.clear();
   };
 
   // Добавим обработчик события на всю форму
@@ -96,12 +96,12 @@
         checkPriceChange(priceValue, ad.offer.price) &&
         checkRoomsChange(roomsValue, ad.offer.rooms) &&
         checkGuestsChange(guestsValue, ad.offer.guests) &&
-        checkFacilities(wifi, ad) &&
-        checkFacilities(dishwasher, ad) &&
-        checkFacilities(parking, ad) &&
-        checkFacilities(washer, ad) &&
-        checkFacilities(elevator, ad) &&
-        checkFacilities(conditioner, ad);
+        checkFacilities(wifi, ad.offer.features) &&
+        checkFacilities(dishwasher, ad.offer.features) &&
+        checkFacilities(parking, ad.offer.features) &&
+        checkFacilities(washer, ad.offer.features) &&
+        checkFacilities(elevator, ad.offer.features) &&
+        checkFacilities(conditioner, ad.offer.features);
     });
 
     // отрисовка меток после фильтрации

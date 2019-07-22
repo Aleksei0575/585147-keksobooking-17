@@ -3,9 +3,16 @@
 // В этом файле находятся вспомогательные функции
 
 (function () {
+  var Keycode = {
+    ENTER: 13,
+    ESC: 27
+  };
+
   window.util = {
     MAP_BLOCK: document.querySelector('.map'), // Поиск карты с объявлениями
+    mapLock: document.querySelector('.map__overlay'),
     searchForm: document.querySelector('.ad-form'), // Поиск формы добавления объявлений
+
     // Функция будет генерировать случайный элемент из массива
     getGenerateArrayItem: function (arr) {
       return arr[Math.floor(Math.random() * arr.length)];
@@ -30,7 +37,15 @@
       nodeArray.forEach(function (node) {
         node.remove();
       });
-    }
+    },
+
+    isKeydownEsc: function (evt) {
+      return evt.keyCode === Keycode.ESC;
+    },
+
+    // isKeydownEvent: function (evt) {
+    //   return evt.keyCode === Keycode.ENTER;
+    // }
   };
 
 })();

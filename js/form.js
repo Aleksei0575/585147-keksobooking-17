@@ -12,6 +12,8 @@
   var formFieldRoomNumber = window.util.searchForm.querySelector('#room_number');
   var formFieldCapacity = window.util.searchForm.querySelector('#capacity');
 
+  var resetButton = window.util.searchForm.querySelector('.ad-form__reset'); // кнопка сброса
+
   // Событие изменения в поле
   formFieldType.addEventListener('change', function () {
     window.form.getPrice(window.param.minPriceMap);
@@ -89,6 +91,7 @@
   function validPrice() {
     var input = window.util.searchForm.querySelector('#price');
     var isValid = input.getAttribute('min') >= 0 && +input.value < 1000000;
+    isValid = input.title = 'Введите значение цены цифрами в диапазоне от 0 до 1000000';
 
     if (isValid) {
       return true;
@@ -101,18 +104,6 @@
     return false;
   }
 
-  // Функция проверки валидации формы
-  function formValid() {
-    return validTitle() && validPrice();
-  }
-
-  // Проверка при отправке формы
-  window.util.searchForm.addEventListener('submit', function (evt) {
-    if (!formValid()) {
-      evt.preventDefault();
-    }
-  });
-
   window.form = {
     // Функция выбора цены от типа жилья
     getPrice: function (object) {
@@ -120,5 +111,32 @@
       formFieldPrice.placeholder = object[formFieldType.value];
     }
   };
+
+  // Функция проверки валидации формы
+  function isFormValid() {
+    return validTitle() && validPrice();
+  }
+
+  // Проверка при отправке формы
+  window.util.searchForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    if (isFormValid()) {
+      window.load(window.messages.success, window.messages.error);
+    }
+  });
+
+  // сброс формы
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
+    window.util.searchForm.reset(); // сброс формы
+
+    window.pin.clear(); // удаление меток
+    window.cardAds.remove(); // удаление карточки объявления
+    window.filters.mapFilters.reset(); // сброс фильтров
+
+    window.param.moveMainPinInitial(); // передвигаем метку в центр
+    window.desactivatePage.pageLock(); // переводим страницу в неактивное состояние
+  });
 
 })();
