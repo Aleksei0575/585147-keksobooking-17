@@ -30,7 +30,7 @@
   // по нажатию на клавишу esc
   var keydownEscSuccess = function (evt) {
     evt.preventDefault();
-    if (window.util.isKeydownEsc()) {
+    if (window.util.isKeydownEsc(evt)) {
       delSuccess();
     }
   };
@@ -84,7 +84,7 @@
   // по нажатию на клавишу esc
   var keydownEscError = function (evt) {
     evt.preventDefault();
-    if (window.util.isKeydownEsc()) {
+    if (window.util.isKeydownEsc(evt)) {
       delError();
     }
   };
