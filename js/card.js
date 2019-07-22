@@ -6,7 +6,7 @@
   // var ESC_KEYCODE = 27;
 
   // Тип жилья
-  var typrHousing = window.param.type;
+  var typeHousing = window.param.type;
 
   // Шаблон объявления из  раметки
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
@@ -29,7 +29,7 @@
 
   // Функция заполняет поле с типом жилья
   var fillTypeHousing = function (field, text) {
-    field.textContent = typrHousing[fillText(field, text)];
+    field.textContent = typeHousing[fillText(field, text)];
   };
 
   // Функция заполняет поле количества комнат и гостей
