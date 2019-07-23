@@ -129,6 +129,9 @@
   resetButton.addEventListener('click', function (evt) {
     evt.preventDefault();
 
+    window.images.clearAvatar(); // удаление аватарки пользователя
+    window.images.clearHousingPhoto(); // удаление изображения жилья
+
     window.util.searchForm.reset(); // сброс формы
 
     window.pin.clear(); // удаление меток
