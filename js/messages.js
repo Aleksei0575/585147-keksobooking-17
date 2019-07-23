@@ -51,6 +51,10 @@
   var onSuccess = function () {
     // Вывод сообщения
     actionsSuccess();
+    // удаление аватарки пользователя
+    window.images.clearAvatar();
+    // удаление изображения жилья
+    window.images.clearHousingPhoto();
     // сброс формы
     window.util.searchForm.reset();
     // удаление меток
