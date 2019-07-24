@@ -121,7 +121,7 @@
   window.util.searchForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     if (isFormValid()) {
-      window.load(window.messages.success, window.messages.error);
+      window.load.loading(window.messages.success, window.messages.error);
     }
   });
 
