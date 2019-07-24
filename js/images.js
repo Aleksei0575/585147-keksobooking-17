@@ -13,6 +13,7 @@
   var avatarPreviewImg = window.util.searchForm.querySelector('.ad-form-header__preview img');
   // адрес аватарки по умолчанию
   var avatarInitial = avatarPreviewImg.src;
+  var isAddFotoAvatar = true;
 
   // Находим в разметке поле загрузки фотографий жилья
   var photoHousingChooser = window.util.searchForm.querySelector('.ad-form__input');
@@ -80,8 +81,11 @@
 
   // Функция очистки аватарки
   var clearAvatar = function () {
-    avatarPreviewImg.src = avatarInitial;
-    window.images.clearAvatar = undefined; // обнуляем добавленный файл с аватаркой
+    if (isAddFotoAvatar === true) {
+      avatarPreviewImg.src = avatarInitial;
+      window.images.clearAvatar = undefined; // обнуляем добавленный файл с аватаркой
+    }
+    window.images.clearAvatar = clearAvatar;
   };
 
   // Функция очистки поля с изображением
@@ -89,7 +93,8 @@
     var attachedPhotos = Array.prototype.slice.call(photoContainer.querySelectorAll('.ad-form__photo'));
     attachedPhotos.forEach(function (it, index) {
       // в первом блоке удаляем только фото
-      if (index === 0) {
+      var img = it.querySelector('img');
+      if (index === 0 && img) {
         (it.querySelector('img')).remove();
       } else {
         // все поледующие блоки удаляем целиком
