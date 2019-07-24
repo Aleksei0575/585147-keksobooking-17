@@ -6,7 +6,7 @@
   var URL_DATA_SAVING = 'https://js.dump.academy/keksobooking'; // Адрес отправки данных формы на сервер
 
   // Функция загрузки данных с сервера
-  window.load = function (onSuccess, onError) {
+  var load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     // Обработка события загрузки
@@ -28,7 +28,7 @@
   };
 
   // Функция отправки данных на сервер
-  window.save = function (onSuccess, onError) {
+  var save = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     // Обработка события загрузки
@@ -47,5 +47,10 @@
     xhr.timeout = 10000; // выставлен таймаут в 10 с
     xhr.open('POST', URL_DATA_SAVING); // Указываем как и куда обращаемся
     xhr.send(); // Запускаем процесс отправки запроса на сервер
+  };
+
+  window.load = {
+    loading: load,
+    saving: save
   };
 })();
