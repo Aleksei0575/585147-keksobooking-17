@@ -75,7 +75,6 @@
     errorMessage.remove();
     document.removeEventListener('click', onAreaClickError);
     document.removeEventListener('keydown', keydownEscError);
-    // document.removeEventListener('click', buttonClick);
   };
 
   // Функция закрывает окно с сообщением об ошибке
@@ -92,13 +91,6 @@
       delError();
     }
   };
-
-  // по нажатию на кнопку "Закрыть"
-  // var errorButton = errorMessage.querySelector('.error__button');
-  // var buttonClick = function (evt) {
-  //   evt.preventDefault();
-  //   delError();
-  // };
 
   // Функция выводит сообщение об ошибке
   var onError = function (message) {

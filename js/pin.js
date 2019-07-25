@@ -9,8 +9,6 @@
   // var ESC_KEYCODE = 27;
   var isDrawingPin = false; // флаг, показывающий была ли уже отрисовка пинов
 
-  // var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
   // Функция создает новый элемент из шаблона
   var renderPin = function (user) {
     var pinElement = pinMarkerTemplate.cloneNode(true);
@@ -28,10 +26,7 @@
       var cardAds = cardTemplate.cloneNode(true);
       cardAds.classList.add('map__pin—active');
       window.cardAds.render(user);
-
-      // Уберал отсюда кусок кода по отрисовке карточек объявлений
     });
-
     return pinElement;
   };
 
@@ -41,7 +36,6 @@
   };
 
   // Вставка маркеров на карту
-  // var users = window.data.createUsers(window.param.NUMBER_ADS);
   window.pin = {
     getUsers: function (arrAds) {
       if (isDrawingPin) {
@@ -53,7 +47,6 @@
         if (arrAds[i]) {
           fragment.appendChild(renderPin(arrAds[i]));
         }
-
         pinUsers.appendChild(fragment);
       }
     },
