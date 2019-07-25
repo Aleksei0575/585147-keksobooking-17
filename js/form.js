@@ -120,6 +120,8 @@
     evt.preventDefault();
     if (isFormValid()) {
       window.load.loading(window.messages.success, window.messages.error);
+    } else {
+      window.load.saving(window.messages.success, window.messages.error);
     }
   });
 
