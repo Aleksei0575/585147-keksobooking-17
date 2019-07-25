@@ -72,7 +72,6 @@
     // Изменяем уровень прозрачности формы
     window.util.searchForm.classList.add('ad-form--disabled');
     window.util.MAP_BLOCK.classList.add('map--faded');
-    // window.util.searchForm.classList.add('ad-form--disabled');
 
     // Передача в поле адрес координат при некативной странице
     getCoordinates();

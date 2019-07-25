@@ -3,11 +3,12 @@
 // Модуль с сообщениями об успешном/ошибочном создании объявления
 (function () {
   var mainTeg = document.querySelector('main');
+
   // Шаблон успешного сообщения
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
+
   // Шаблон сообщения об ошибке
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  // var errorButton = document.querySelector('.error__button');
 
   // Переменные где будут храниться сообщения
   var successMessage;
@@ -37,8 +38,10 @@
 
   // Функция вывода сообщения об успешной отправке объявления
   var actionsSuccess = function () {
+
     // Клонируем шаблон
     successMessage = successTemplate.cloneNode(true);
+
     // Добавляем обработчики событий
     document.addEventListener('keydown', keydownEscSuccess);
     document.addEventListener('click', onAreaClickSuccess);
@@ -51,20 +54,28 @@
   var onSuccess = function () {
     // Вывод сообщения
     actionsSuccess();
+
     // удаление аватарки пользователя
     window.images.clearAvatar();
+
     // удаление изображения жилья
     window.images.clearHousingPhoto();
+
     // сброс формы
     window.util.searchForm.reset();
+
     // удаление меток
     window.pin.clear();
+
     // удаление карточки объявления
     window.cardAds.remove();
+
     // сброс фильтров
     window.filters.mapFilters.reset();
+
     // выставляем шл. метки в центр (дефолт)
     window.param.moveMainPinInitial();
+
     // перевод страницы в неактивное состояние
     window.desactivatePage.pageLock();
   };
@@ -94,10 +105,13 @@
 
   // Функция выводит сообщение об ошибке
   var onError = function (message) {
+
     // Клонируем шаблон
     errorMessage = errorTemplate.cloneNode(true);
+
     // Блок с сообщением
     var textError = errorMessage.querySelector('.error__message');
+
     // добавляет текст сообщения
     textError.textContent = message;
 

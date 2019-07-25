@@ -6,7 +6,6 @@
   // Находим блок в котором будут отрисовываться пины-маркеры
   var pinUsers = window.util.MAP_BLOCK.querySelector('.map__pins');
   var pinMarkerTemplate = document.querySelector('#pin').content.querySelector('button');
-  // var ESC_KEYCODE = 27;
   var isDrawingPin = false; // флаг, показывающий была ли уже отрисовка пинов
 
   // Функция создает новый элемент из шаблона
