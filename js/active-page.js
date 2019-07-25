@@ -21,7 +21,7 @@
   };
 
   // Форма с объявлениями
-  var adsFormFieldset = window.util.searchForm.querySelectorAll('fieldset');
+  var adsFormFieldsets = window.util.searchForm.querySelectorAll('fieldset');
   // Поле с координатами адреса
   var adsFormAddress = window.util.searchForm.querySelector('#address');
 
@@ -64,8 +64,8 @@
     for (var i = 0; i < mapFiltersSelects.length; i++) {
       window.util.addDisabled(mapFiltersSelects[i]);
     }
-    for (i = 0; i < adsFormFieldset.length; i++) {
-      window.util.addDisabled(adsFormFieldset[i]);
+    for (i = 0; i < adsFormFieldsets.length; i++) {
+      window.util.addDisabled(adsFormFieldsets[i]);
     }
     // Изменяем уровень прозрачности карты
     window.util.mapLock.style.opacity = '1';
@@ -94,8 +94,8 @@
     for (var i = 0; i < mapFiltersSelects.length; i++) {
       window.util.removeDisabled(mapFiltersSelects[i]);
     }
-    for (i = 0; i < adsFormFieldset.length; i++) {
-      window.util.removeDisabled(adsFormFieldset[i]);
+    for (i = 0; i < adsFormFieldsets.length; i++) {
+      window.util.removeDisabled(adsFormFieldsets[i]);
     }
     // Изменяем уровень прозрачности карты
     window.util.mapLock.style.opacity = '0';

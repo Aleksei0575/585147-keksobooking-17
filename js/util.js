@@ -32,20 +32,16 @@
       el.disabled = false;
     },
     // Функция удаляет узел из DOM-дерева
-    deleteNodeList: function (parentEl, selectors) {
-      var nodeArray = Array.prototype.slice.call(parentEl.querySelectorAll(selectors));
-      nodeArray.forEach(function (node) {
+    deleteNodeList: function (parentElements, selectors) {
+      var nodeArrays = Array.prototype.slice.call(parentElements.querySelectorAll(selectors));
+      nodeArrays.forEach(function (node) {
         node.remove();
       });
     },
 
     isKeydownEsc: function (evt) {
       return evt.keyCode === Keycode.ESC;
-    },
-
-    // isKeydownEvent: function (evt) {
-    //   return evt.keyCode === Keycode.ENTER;
-    // }
+    }
   };
 
 })();
