@@ -57,7 +57,6 @@
 
     // Возврат главной метки в исходное положение
     moveMainPinInitial: function () {
-
       window.param.mainPin.style.top = window.param.MainPinInitial.Y + 'px';
       window.param.mainPin.style.left = window.param.MainPinInitial.X + 'px';
     }

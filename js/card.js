@@ -3,7 +3,6 @@
 // Модуль отрисовки объявлений
 (function () {
   var cardAds;
-  // var ESC_KEYCODE = 27;
 
   // Тип жилья
   var typeHousing = window.param.type;
@@ -111,9 +110,7 @@
     if (window.util.isKeydownEsc(evt)) {
       popupClose();
     }
-    // document.removeEventListener('keydown', onPopupEscPress);
   };
-  // document.addEventListener('keydown', onPopupEscPress);
 
   // Удалить обработчик 'keydown'
   document.removeEventListener('keydown', onPopupEscPress);

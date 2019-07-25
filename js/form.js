@@ -32,7 +32,6 @@
     event.preventDefault();
   });
 
-
   // Функция синхронизации поля «Количество комнат» с полем «Количество мест»
   // Значения по умолчанию
   if (formFieldRoomNumber.value === '1') {
@@ -100,7 +99,6 @@
     input.setCustomValidity('Ошибка ввода данных');
     input.title = 'Введите правильное значение цены цифрами в диапазоне от 0 до 1000000';
     input.focus();
-    // input.classList.add('error__button'); // error
     return false;
   }
 
@@ -122,6 +120,8 @@
     evt.preventDefault();
     if (isFormValid()) {
       window.load.loading(window.messages.success, window.messages.error);
+    } else {
+      window.load.saving(window.messages.success, window.messages.error);
     }
   });
 
