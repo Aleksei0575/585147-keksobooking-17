@@ -73,6 +73,9 @@
 
     // фильтрация данных
     var filterDataValue = window.param.datesList.filter(function (ad) {
+      // При работе с фильтром удалить открытую карточку
+      window.cardAds.remove();
+
       return checkTypeChange(typeValue, ad.offer.type) &&
         checkPriceChange(priceValue, ad.offer.price) &&
         checkRoomsChange(roomsValue, ad.offer.rooms) &&
