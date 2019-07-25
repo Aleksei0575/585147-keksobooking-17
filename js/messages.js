@@ -103,7 +103,6 @@
 
     document.addEventListener('click', onAreaClickError);
     document.addEventListener('keydown', keydownEscError);
-    // document.addEventListener('click', buttonClick);
 
     // Добавляем сообщение в разметку
     mainTeg.insertAdjacentElement('afterbegin', errorMessage);
