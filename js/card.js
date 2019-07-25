@@ -47,7 +47,7 @@
 
   // Функция заполняет время въезда/выезда
   var fillTextTime = function (field, timeIn, timeOut) {
-    field.textContent = 'Заезд' + fillText(field, timeIn) + ', выезд до' + fillText(field, timeOut);
+    field.textContent = 'Заезд ' + fillText(field, timeIn) + ', выезд до ' + fillText(field, timeOut);
   };
 
   // Функция заполняет поле списка с удобствами
