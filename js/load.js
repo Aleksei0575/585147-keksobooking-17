@@ -28,15 +28,16 @@
   };
 
   // Функция отправки данных на сервер
-  var save = function (onSuccess, onError) {
+  var save = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     // Обработка события загрузки
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        return onSuccess(xhr.response);
+        onSuccess(xhr.response);
+      } else {
+        onError('Ошибка загрузки объявления. Статус ответа: ' + xhr.status + '' + xhr.statusText);
       }
-      return onError('Ошибка загрузки объявления. Статус ответа: ' + xhr.status + '' + xhr.statusText);
     });
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
@@ -46,7 +47,7 @@
     });
     xhr.timeout = 10000; // выставлен таймаут в 10 с
     xhr.open('POST', URL_DATA_SAVING); // Указываем как и куда обращаемся
-    xhr.send(); // Запускаем процесс отправки запроса на сервер
+    xhr.send(data); // Запускаем процесс отправки запроса на сервер
   };
 
   window.load = {
