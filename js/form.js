@@ -121,13 +121,16 @@
   window.util.searchForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     if (isFormValid()) {
-      window.load(window.messages.success, window.messages.error);
+      window.load.loading(window.messages.success, window.messages.error);
     }
   });
 
   // сброс формы
   resetButton.addEventListener('click', function (evt) {
     evt.preventDefault();
+
+    window.images.clearAvatar(); // удаление аватарки пользователя
+    window.images.clearHousingPhoto(); // удаление изображения жилья
 
     window.util.searchForm.reset(); // сброс формы
 
