@@ -17,20 +17,23 @@
     getGenerateArrayItem: function (arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     },
+
     // Функция будет генерировать случайный число
     getGenerateNum: function (min, max) {
       var rand = min - 0.5 + Math.random() * (max - min + 1);
       rand = Math.round(rand);
       return rand;
     },
-    // Функция добавления элементам DOM атрибута disabled
+
     addDisabled: function (el) {
       el.disabled = true;
     },
-    // Функция убирает атрибут disabled у DOM-элементов
+
     removeDisabled: function (el) {
       el.disabled = false;
     },
+
+
     // Функция удаляет узел из DOM-дерева
     deleteNodeList: function (parentElements, selectors) {
       var nodeArrays = Array.prototype.slice.call(parentElements.querySelectorAll(selectors));

@@ -24,6 +24,7 @@
 
   // Обработчик события изменения состояния avatarChooser
   avatarChooser.addEventListener('change', function () {
+
     // проверка файла-изображения с подходящим расширением
     var file = avatarChooser.files[0];
     var fileName = file.name.toLowerCase();
@@ -31,6 +32,7 @@
     var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
+
     // После успешной проверки загружаем аватарку
     if (matches) {
       var reader = new FileReader();
@@ -60,6 +62,7 @@
 
   // Обработчик события изменения состояния photoHousingChooser
   photoHousingChooser.addEventListener('change', function () {
+
     // проверка файла-изображения с подходящим расширением
     var file = photoHousingChooser.files[0];
     var fileName = file.name.toLowerCase();
@@ -108,4 +111,5 @@
     clearAvatar: clearAvatar,
     clearHousingPhoto: clearHousingPhoto
   };
+
 })();
