@@ -71,7 +71,7 @@
   });
 
   // Функция валидации поля заголовка
-  function validTitle() {
+  function getValidTitle() {
     var input = formFieldTitle;
     var length = input.value.length;
     var isValid = length >= 30 && length < 100;
@@ -87,7 +87,7 @@
   }
 
   // Функция валидации поля с ценой за сутки
-  function validPrice() {
+  function getValidPrice() {
     var input = window.util.searchForm.querySelector('#price');
     var isValid = input.getAttribute('min') >= 0 && +input.value < 1000000;
     isValid = input.title = 'Введите значение цены цифрами в диапазоне от 0 до 1000000';
@@ -112,7 +112,7 @@
 
   // Функция проверки валидации формы
   function isFormValid() {
-    return validTitle() && validPrice();
+    return getValidTitle() && getValidPrice();
   }
 
   // Проверка при отправке формы

@@ -31,7 +31,7 @@
   };
 
   // Удаляем ранее отрисованные пины из разметки
-  var delPin = function () {
+  var deletePin = function () {
     window.util.deleteNodeList(pinUsers, '.map__pin--drawing');
   };
 
@@ -51,7 +51,7 @@
       }
     },
 
-    clear: delPin
+    clear: deletePin
   };
 
 })();
