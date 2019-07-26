@@ -159,7 +159,7 @@
       }
 
       // Отрисовка маркеров на странице
-      window.load.loading(onDateLoad, window.messages.error);
+      window.backend.loading(onDateLoad, window.messages.error);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -168,8 +168,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  window.desactivatePage = {
-    pageLock: pageLock
-  };
+  window.desactivatePage = pageLock;
 
 })();
