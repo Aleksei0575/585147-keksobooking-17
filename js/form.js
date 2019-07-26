@@ -14,6 +14,10 @@
 
   var resetButton = window.util.searchForm.querySelector('.ad-form__reset'); // кнопка сброса
 
+  var MIN_LENGTH_TITLE = 30;
+  var MAX_LENGTH_TITLE = 100;
+  var MAX_VALUE_PRICE = 1000000;
+
   // Событие изменения в поле
   formFieldType.addEventListener('change', function () {
     window.form.getPrice(window.param.minPriceMap);
@@ -74,7 +78,7 @@
   function getValidTitle() {
     var input = formFieldTitle;
     var length = input.value.length;
-    var isValid = length >= 30 && length < 100;
+    var isValid = length >= MIN_LENGTH_TITLE && length < MAX_LENGTH_TITLE;
 
     if (isValid) {
       return true;
@@ -89,7 +93,7 @@
   // Функция валидации поля с ценой за сутки
   function getValidPrice() {
     var input = window.util.searchForm.querySelector('#price');
-    var isValid = input.getAttribute('min') >= 0 && +input.value < 1000000;
+    var isValid = input.getAttribute('min') >= 0 && +input.value < MAX_VALUE_PRICE;
     isValid = input.title = 'Введите значение цены цифрами в диапазоне от 0 до 1000000';
 
     if (isValid) {
