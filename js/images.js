@@ -98,7 +98,7 @@
       // в первом блоке удаляем только фото
       var img = it.querySelector('img');
       if (index === 0 && img) {
-        (it.querySelector('img')).remove();
+        img.remove();
       } else {
         // все поледующие блоки удаляем целиком
         it.remove();
