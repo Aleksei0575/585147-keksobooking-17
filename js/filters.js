@@ -23,10 +23,14 @@
     'high': 50000
   };
 
-  // Функция проверяет выбранное в фильтре значение
-  var checkTypeChange = function (value, type) {
-    return (value === anyValue || type === value);
+  var checkParameters = function (value, parameter) {
+    return (value === anyValue || parameter.toString() === value);
   };
+
+  // Функция проверяет выбранное в фильтре значение
+  // var checkTypeChange = function (value, type) {
+  //   return (value === anyValue || type === value);
+  // };
 
   // сравнивает стоимость жилья
   var checkPriceChange = function (value, price) {
@@ -39,14 +43,14 @@
   };
 
   // сравнивает количество комнат
-  var checkRoomsChange = function (value, rooms) {
-    return (value === anyValue || rooms.toString() === value);
-  };
+  // var checkRoomsChange = function (value, rooms) {
+  //   return (value === anyValue || rooms.toString() === value);
+  // };
 
   // сравнивает число гостей
-  var checkGuestsChange = function (value, guests) {
-    return (value === anyValue || guests.toString() === value);
-  };
+  // var checkGuestsChange = function (value, guests) {
+  //   return (value === anyValue || guests.toString() === value);
+  // };
 
   // функция сравнивает выбранные удобства
   var checkFacilities = function (input, features) {
@@ -74,10 +78,10 @@
       // При работе с фильтром удалить открытую карточку
       window.cardAds.remove();
 
-      return checkTypeChange(typeValue, ad.offer.type) &&
+      return checkParameters(typeValue, ad.offer.type) &&
         checkPriceChange(priceValue, ad.offer.price) &&
-        checkRoomsChange(roomsValue, ad.offer.rooms) &&
-        checkGuestsChange(guestsValue, ad.offer.guests) &&
+        checkParameters(roomsValue, ad.offer.rooms) &&
+        checkParameters(guestsValue, ad.offer.guests) &&
         checkFacilities(wifi, ad.offer.features) &&
         checkFacilities(dishwasher, ad.offer.features) &&
         checkFacilities(parking, ad.offer.features) &&
