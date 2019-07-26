@@ -71,13 +71,13 @@
     window.cardAds.remove();
 
     // сброс фильтров
-    window.filters.mapFilters.reset();
+    window.mapFilters.reset();
 
     // выставляем шл. метки в центр (дефолт)
     window.param.moveMainPinInitial();
 
     // перевод страницы в неактивное состояние
-    window.desactivatePage.pageLock();
+    window.desactivatePage();
   };
 
   // Сообщение об ошибке
