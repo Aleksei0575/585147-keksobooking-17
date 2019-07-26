@@ -56,7 +56,7 @@
     window.util.deleteNodeList(parentNode, selector);
 
     // добавим только фактически имеющиеся удобства
-    if (arr && arr.length > 0) {
+    if (arr && arr.length) {
       arr.forEach(function (it) {
         var feature = document.createElement('li');
         feature.classList.add('popup__feature');
@@ -70,7 +70,7 @@
 
   // Функция добавляет фото жилья
   var fillPhoto = function (arr, el, parentEl) {
-    if (arr && arr.length > 0) {
+    if (arr && arr.length) {
       var fragment = document.createDocumentFragment();
       arr.forEach(function (it, i) {
         if (i === 0) {

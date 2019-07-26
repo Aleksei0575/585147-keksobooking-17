@@ -84,7 +84,7 @@
 
   // Функция очистки аватарки
   var clearAvatar = function () {
-    if (isAddFotoAvatar === true) {
+    if (isAddFotoAvatar) {
       avatarPreviewImg.src = avatarInitial;
       window.images.clearAvatar = undefined; // обнуляем добавленный файл с аватаркой
     }
