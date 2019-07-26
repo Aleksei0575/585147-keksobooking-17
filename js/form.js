@@ -120,7 +120,7 @@
     evt.preventDefault();
     if (isFormValid()) {
       var formData = new FormData(window.util.searchForm);
-      window.load.saving(formData, window.messages.success, window.messages.error);
+      window.backend.saving(formData, window.messages.success, window.messages.error);
     }
   });
 
@@ -135,10 +135,10 @@
 
     window.pin.clear(); // удаление меток
     window.cardAds.remove(); // удаление карточки объявления
-    window.filters.mapFilters.reset(); // сброс фильтров
+    window.mapFilters.reset(); // сброс фильтров
 
     window.param.moveMainPinInitial(); // передвигаем метку в центр
-    window.desactivatePage.pageLock(); // переводим страницу в неактивное состояние
+    window.desactivatePage(); // переводим страницу в неактивное состояние
   });
 
 })();
