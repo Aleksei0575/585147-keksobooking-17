@@ -2,10 +2,8 @@
 
 // Модуль фильтрации объявлений
 (function () {
-  window.filters = {
-    // Форма фильтрации в разметке
-    mapFilters: window.util.MAP_BLOCK.querySelector('.map__filters')
-  };
+  // Форма фильтрации в разметке
+  window.mapFilters = window.util.MAP_BLOCK.querySelector('.map__filters');
 
   // невыбранное значение фильтра
   var anyValue = 'any';
@@ -56,20 +54,20 @@
   };
 
   // Добавим обработчик события на всю форму
-  window.filters.mapFilters.addEventListener('change', function () {
+  window.mapFilters.addEventListener('change', function () {
     // блок с удобствами в разметке
-    var wifi = window.filters.mapFilters.querySelector('#filter-wifi');
-    var dishwasher = window.filters.mapFilters.querySelector('#filter-dishwasher');
-    var parking = window.filters.mapFilters.querySelector('#filter-parking');
-    var washer = window.filters.mapFilters.querySelector('#filter-washer');
-    var elevator = window.filters.mapFilters.querySelector('#filter-elevator');
-    var conditioner = window.filters.mapFilters.querySelector('#filter-conditioner');
+    var wifi = window.mapFilters.querySelector('#filter-wifi');
+    var dishwasher = window.mapFilters.querySelector('#filter-dishwasher');
+    var parking = window.mapFilters.querySelector('#filter-parking');
+    var washer = window.mapFilters.querySelector('#filter-washer');
+    var elevator = window.mapFilters.querySelector('#filter-elevator');
+    var conditioner = window.mapFilters.querySelector('#filter-conditioner');
 
     // присваиваем значение переменным по умолчанию
-    var typeValue = window.filters.mapFilters.querySelector('#housing-type').value;
-    var priceValue = window.filters.mapFilters.querySelector('#housing-price').value;
-    var roomsValue = window.filters.mapFilters.querySelector('#housing-rooms').value;
-    var guestsValue = window.filters.mapFilters.querySelector('#housing-guests').value;
+    var typeValue = window.mapFilters.querySelector('#housing-type').value;
+    var priceValue = window.mapFilters.querySelector('#housing-price').value;
+    var roomsValue = window.mapFilters.querySelector('#housing-rooms').value;
+    var guestsValue = window.mapFilters.querySelector('#housing-guests').value;
 
     // фильтрация данных
     var filterDataValue = window.param.datesList.filter(function (ad) {
