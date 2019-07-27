@@ -44,8 +44,7 @@
     return (!input.checked || features.indexOf(input.value) !== -1);
   };
 
-  // Добавим обработчик события на всю форму
-  window.mapFilters.addEventListener('change', function () {
+  function filterDataList() {
     // блок с удобствами в разметке
     var wifi = window.mapFilters.querySelector('#filter-wifi');
     var dishwasher = window.mapFilters.querySelector('#filter-dishwasher');
@@ -61,7 +60,7 @@
     var guestsValue = window.mapFilters.querySelector('#housing-guests').value;
 
     // фильтрация данных
-    var filterDataValue = window.param.datesList.filter(function (ad) {
+    return window.param.datesList.filter(function (ad) {
       // При работе с фильтром удалить открытую карточку
       window.cardAds.remove();
 
@@ -76,13 +75,19 @@
         checkFacilities(elevator, ad.offer.features) &&
         checkFacilities(conditioner, ad.offer.features);
     });
+  }
+
+  window.filterDataList = filterDataList;
+
+  // Добавим обработчик события на всю форму
+  window.mapFilters.addEventListener('change', function () {
 
     // отрисовка меток после фильтрации
     window.debounce(function () {
       // Если есть отрисованные метки, очищаем поле
       window.pin.clear();
       // и сама отрисовка
-      window.pin.getUsers(filterDataValue);
+      window.pin.getUsers(filterDataList());
     });
   });
 
