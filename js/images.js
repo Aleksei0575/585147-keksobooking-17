@@ -3,38 +3,65 @@
 // Модуль загрузки изображений пользователем в форму обявления
 
 (function () {
-  // Загрузка аватарки
+
   // Тип файлов который используем
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var IMAGE_SIZE = 70;
+
+  var DropAreaStyle = {
+    BORDER_ACTIVE: '#db2814',
+    BG_ACTIVE: 'rgba(219, 40, 20, 0.2)',
+    BORDER_INITIAL: '#c7c7c7',
+    BG_INITIAL: 'transparent'
+  };
 
   // Находим в разметке поле загрузки аватарки
   var avatarChooser = window.util.searchForm.querySelector('.ad-form-header__input');
   // Находим в разметке поле где будет отображаться аватарка
   var avatarPreviewImg = window.util.searchForm.querySelector('.ad-form-header__preview img');
-  // адрес аватарки по умолчанию
-  var avatarInitial = avatarPreviewImg.src;
+  // ссылка на область, куда будет перетаскиваться файл
+  var avatarDropArea = window.util.searchForm.querySelector('.ad-form-header__drop-zone');
+
   var isAddFotoAvatar = true;
+  var avatarInitial = avatarPreviewImg.src;
 
   // Находим в разметке поле загрузки фотографий жилья
   var photoHousingChooser = window.util.searchForm.querySelector('.ad-form__input');
   // Находим в разметке поле где будут отображаться фотографии жилья
   var photoHousingPreviewImg = window.util.searchForm.querySelector('.ad-form__photo');
   // Блок с фотографиями
-  var photoContainer = window.util.searchForm.querySelector('.ad-form__photo-container');
+  var photosContainer = window.util.searchForm.querySelector('.ad-form__photo-container');
+  // ссылка на область, куда будет перетаскиваться файл
+  var photoDropArea = window.util.searchForm.querySelector('.ad-form__drop-zone');
+
+  // проверка файла-изображения с подходящим расширением
+  var matchesFileType = function (file) {
+    var matches = FILE_TYPES.some(function (it) {
+      return file.name.toLowerCase().endsWith(it);
+    });
+    return matches;
+  };
+
+  // Фунция добавляет в разметку изображения
+  var addPhoto = function (address) {
+    var propertyPhoto = document.createElement('img');
+    propertyPhoto.src = address;
+    propertyPhoto.width = IMAGE_SIZE;
+    propertyPhoto.height = IMAGE_SIZE;
+    if (document.querySelector('.ad-form__photo img')) {
+      var moreDiv = photoHousingPreviewImg.cloneNode(false);
+      photosContainer.appendChild(moreDiv);
+      moreDiv.appendChild(propertyPhoto);
+    } else {
+      photoHousingPreviewImg.appendChild(propertyPhoto);
+    }
+  };
 
   // Обработчик события изменения состояния avatarChooser
+  // добавление аватарки через окно диалога выбора файла
   avatarChooser.addEventListener('change', function () {
-
-    // проверка файла-изображения с подходящим расширением
     var file = avatarChooser.files[0];
-    var fileName = file.name.toLowerCase();
-
-    var matches = FILE_TYPES.some(function (it) {
-      return fileName.endsWith(it);
-    });
-
-    // После успешной проверки загружаем аватарку
-    if (matches) {
+    if (matchesFileType(file)) {
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
@@ -45,44 +72,99 @@
     }
   });
 
-  // Фунция добавляет в разметку изображения
-  var addPhotoImg = function (address) {
-    var housingPhoto = document.createElement('img');
-    housingPhoto.src = address;
-    housingPhoto.setAttribute('width', '70');
-    housingPhoto.setAttribute('height', '70');
-    if (window.util.searchForm.querySelector('.ad-form__photo img')) {
-      var moreDiv = photoHousingPreviewImg.cloneNode(false);
-      photoContainer.appendChild(moreDiv);
-      moreDiv.appendChild(housingPhoto);
-    } else {
-      photoHousingPreviewImg.appendChild(housingPhoto);
-    }
-  };
-
-  // Обработчик события изменения состояния photoHousingChooser
+  // добавление изображения через окно диалога выбора файла
   photoHousingChooser.addEventListener('change', function () {
-
-    // проверка файла-изображения с подходящим расширением
     var file = photoHousingChooser.files[0];
-    var fileName = file.name.toLowerCase();
 
-    var matches = FILE_TYPES.some(function (it) {
-      return fileName.endsWith(it);
-    });
-    // После успешной проверки загружаем изображения
-    if (matches) {
+    if (matchesFileType(file) === true) {
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        addPhotoImg(reader.result);
+        addPhoto(reader.result);
       });
 
       reader.readAsDataURL(file);
     }
   });
 
-  // Функция очистки аватарки
+  // подсвечивание области для перетаскивания
+  var highlightAreaAvatar = function (dropArea) {
+    dropArea.style.borderColor = DropAreaStyle.BORDER_ACTIVE;
+    dropArea.style.backgroundColor = DropAreaStyle.BG_ACTIVE;
+  };
+
+  // стиль области для перетаскивания по умолчанию
+  var returnDefaultStyle = function (dropArea) {
+    dropArea.style.borderColor = DropAreaStyle.BORDER_INITIAL;
+    dropArea.style.backgroundColor = DropAreaStyle.BG_INITIAL;
+  };
+
+  // DRAG'N'DROP
+  // drag'n'drop аватарки
+  avatarDropArea.addEventListener('dragenter', function (evt) {
+    evt.preventDefault();
+    highlightAreaAvatar(avatarDropArea);
+  }, false);
+
+  avatarDropArea.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    highlightAreaAvatar(avatarDropArea);
+  }, false);
+
+  avatarDropArea.addEventListener('dragleave', function (evt) {
+    evt.preventDefault();
+    returnDefaultStyle(avatarDropArea);
+  }, false);
+
+  avatarDropArea.addEventListener('drop', function (evt) {
+    evt.preventDefault();
+    returnDefaultStyle(avatarDropArea);
+
+    var file = evt.dataTransfer.files[0];
+
+    if (matchesFileType(file) === true) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        avatarPreviewImg.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  }, false);
+
+  // drag and drop выбранного изображения
+  photoDropArea.addEventListener('dragenter', function (evt) {
+    evt.preventDefault();
+    highlightAreaAvatar(photoDropArea);
+  }, false);
+
+  photoDropArea.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    highlightAreaAvatar(photoDropArea);
+  }, false);
+
+  photoDropArea.addEventListener('dragleave', function (evt) {
+    evt.preventDefault();
+    returnDefaultStyle(photoDropArea);
+  }, false);
+
+  photoDropArea.addEventListener('drop', function (evt) {
+    evt.preventDefault();
+    returnDefaultStyle(photoDropArea);
+
+    var file = evt.dataTransfer.files[0];
+
+    if (matchesFileType(file) === true) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function () {
+        addPhoto(reader.result);
+      });
+      reader.readAsDataURL(file);
+    }
+  }, false);
+
+  // Функция очистки поля формы с аватаркой
   var clearAvatar = function () {
     if (isAddFotoAvatar) {
       avatarPreviewImg.src = avatarInitial;
@@ -91,9 +173,9 @@
     window.images.clearAvatar = clearAvatar;
   };
 
-  // Функция очистки поля с изображением
+  // Функция очистки поля формы с изображением
   var clearHousingPhoto = function () {
-    var attachedPhotos = Array.prototype.slice.call(photoContainer.querySelectorAll('.ad-form__photo'));
+    var attachedPhotos = Array.prototype.slice.call(photosContainer.querySelectorAll('.ad-form__photo'));
     attachedPhotos.forEach(function (it, index) {
       // в первом блоке удаляем только фото
       var img = it.querySelector('img');
@@ -106,7 +188,6 @@
     });
   };
 
-  // Обалсть видимости - для передачи в другие модули
   window.images = {
     clearAvatar: clearAvatar,
     clearHousingPhoto: clearHousingPhoto
