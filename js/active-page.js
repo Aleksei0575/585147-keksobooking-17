@@ -159,7 +159,9 @@
       }
 
       // Отрисовка маркеров на странице
-      window.backend.loading(onDateLoad, window.messages.error);
+      if (window.param.datesList.length === 0) {
+        window.backend.loading(onDateLoad, window.messages.error);
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
