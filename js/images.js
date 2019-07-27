@@ -36,10 +36,9 @@
 
   // проверка файла-изображения с подходящим расширением
   var matchesFileType = function (file) {
-    var matches = FILE_TYPES.some(function (it) {
+    return FILE_TYPES.some(function (it) {
       return file.name.toLowerCase().endsWith(it);
     });
-    return matches;
   };
 
   // Фунция добавляет в разметку изображения
