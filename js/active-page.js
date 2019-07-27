@@ -160,6 +160,7 @@
 
       // Отрисовка маркеров на странице
       window.backend.loading(onDateLoad, window.messages.error);
+      window.pin.getUsers(window.filterDataList());
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
