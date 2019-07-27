@@ -94,7 +94,6 @@
   function getValidPrice() {
     var input = window.util.searchForm.querySelector('#price');
     var isValid = input.getAttribute('min') >= 0 && +input.value < MAX_VALUE_PRICE;
-    isValid = input.title = 'Введите значение цены цифрами в диапазоне от 0 до 1000000';
 
     if (isValid) {
       return true;
