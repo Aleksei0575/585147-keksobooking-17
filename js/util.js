@@ -13,18 +13,6 @@
     mapLock: document.querySelector('.map__overlay'),
     searchForm: document.querySelector('.ad-form'), // Поиск формы добавления объявлений
 
-    // Функция будет генерировать случайный элемент из массива
-    getGenerateArrayItem: function (arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    },
-
-    // Функция будет генерировать случайный число
-    getGenerateNum: function (min, max) {
-      var rand = min - 0.5 + Math.random() * (max - min + 1);
-      rand = Math.round(rand);
-      return rand;
-    },
-
     addDisabled: function (el) {
       el.disabled = true;
     },
