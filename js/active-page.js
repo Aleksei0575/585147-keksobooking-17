@@ -104,7 +104,7 @@
     window.param.datesList = loadingSuccess.filter(function (it) {
       return it.offer;
     });
-    window.pin.getUsers(window.param.datesList);
+    window.pin.getUsers(window.filterDataList());
   };
 
   // Перевод страницы в некативное состояние
@@ -160,7 +160,6 @@
 
       // Отрисовка маркеров на странице
       window.backend.loading(onDateLoad, window.messages.error);
-      window.pin.getUsers(window.filterDataList());
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
