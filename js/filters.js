@@ -5,6 +5,20 @@
   // Форма фильтрации в разметке
   window.mapFilters = window.util.MAP_BLOCK.querySelector('.map__filters');
 
+  // блок с удобствами в разметке
+  var wifi = window.mapFilters.querySelector('#filter-wifi');
+  var dishwasher = window.mapFilters.querySelector('#filter-dishwasher');
+  var parking = window.mapFilters.querySelector('#filter-parking');
+  var washer = window.mapFilters.querySelector('#filter-washer');
+  var elevator = window.mapFilters.querySelector('#filter-elevator');
+  var conditioner = window.mapFilters.querySelector('#filter-conditioner');
+
+  // блоки параметрами жилья в разметке
+  var typeElements = window.mapFilters.querySelector('#housing-type');
+  var priceElements = window.mapFilters.querySelector('#housing-price');
+  var roomElements = window.mapFilters.querySelector('#housing-rooms');
+  var guestElements = window.mapFilters.querySelector('#housing-guests');
+
   // невыбранное значение фильтра
   var anyValue = 'any';
 
@@ -45,29 +59,15 @@
   };
 
   function filterDataList() {
-    // блок с удобствами в разметке
-    var wifi = window.mapFilters.querySelector('#filter-wifi');
-    var dishwasher = window.mapFilters.querySelector('#filter-dishwasher');
-    var parking = window.mapFilters.querySelector('#filter-parking');
-    var washer = window.mapFilters.querySelector('#filter-washer');
-    var elevator = window.mapFilters.querySelector('#filter-elevator');
-    var conditioner = window.mapFilters.querySelector('#filter-conditioner');
-
-    // присваиваем значение переменным по умолчанию
-    var typeValue = window.mapFilters.querySelector('#housing-type').value;
-    var priceValue = window.mapFilters.querySelector('#housing-price').value;
-    var roomsValue = window.mapFilters.querySelector('#housing-rooms').value;
-    var guestsValue = window.mapFilters.querySelector('#housing-guests').value;
-
     // фильтрация данных
     return window.param.datesList.filter(function (ad) {
       // При работе с фильтром удалить открытую карточку
       window.cardAds.remove();
 
-      return checkParameters(typeValue, ad.offer.type) &&
-        checkPriceChange(priceValue, ad.offer.price) &&
-        checkParameters(roomsValue, ad.offer.rooms) &&
-        checkParameters(guestsValue, ad.offer.guests) &&
+      return checkParameters(typeElements.value, ad.offer.type) &&
+        checkPriceChange(priceElements.value, ad.offer.price) &&
+        checkParameters(roomElements.value, ad.offer.rooms) &&
+        checkParameters(guestElements.value, ad.offer.guests) &&
         checkFacilities(wifi, ad.offer.features) &&
         checkFacilities(dishwasher, ad.offer.features) &&
         checkFacilities(parking, ad.offer.features) &&
