@@ -161,6 +161,8 @@
       // Отрисовка маркеров на странице
       if (window.param.datesList.length === 0) {
         window.backend.loading(onDateLoad, window.messages.error);
+      } else {
+        window.pin.getUsers(window.filterDataList());
       }
 
       document.removeEventListener('mousemove', onMouseMove);
